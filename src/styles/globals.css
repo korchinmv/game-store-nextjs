@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-color: #ed5564;
+  --bg-color: #161a1e;
+  --white-color: #fff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--white-color);
+  font-family: var(--roboto-condensed, sans-serif);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+@layer utilities {
+  .animation {
+    outline: transparent;
+    padding: 3px;
+    border-radius: 8px;
+    transition: color 0.3s, opacity 0.3s, text-decoration-color 0.3s,
+      box-shadow 0.3s;
+
+    &:focus {
+      box-shadow: 0 0 0 2px var(--accent-color);
+      border-radius: 8px;
+    }
+
+    &:active {
+      opacity: 0.7;
+      box-shadow: 0 0 0 2px var(--accent-color);
+    }
+
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+}
