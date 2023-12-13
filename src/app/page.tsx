@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/redux/hooks";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Home = () => {
-  return <h1 className=''>Home</h1>;
+  return <h1>hi home</h1>;
 };
 
 export default Home;

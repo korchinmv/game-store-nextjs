@@ -1,7 +1,9 @@
 import "@/styles/globals.css";
+import { Roboto_Condensed } from "next/font/google";
+import StoreProvider from "@/app/StoreProvider";
+import MobileMenu from "@/components/ui/MobileMenu";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Roboto_Condensed } from "next/font/google";
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--roboto-condensed",
@@ -12,11 +14,14 @@ const robotoCondensed = Roboto_Condensed({
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en'>
-      <body className={`${robotoCondensed.variable} flex flex-col h-screen`}>
-        <Header />
-        <main className='shrink'>{children}</main>
-        <Footer />
-      </body>
+      <StoreProvider>
+        <body className={`${robotoCondensed.variable} flex flex-col h-screen`}>
+          <Header />
+          {children}
+          <Footer />
+          <MobileMenu />
+        </body>
+      </StoreProvider>
     </html>
   );
 };

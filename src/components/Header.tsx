@@ -1,9 +1,10 @@
 "use client";
+import { FC } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Logo from "./ui/Logo";
 import Cart from "./ui/Cart";
-import { usePathname } from "next/navigation";
-import { FC } from "react";
+import BurgerButton from "./ui/BurgerButton";
 
 const Header: FC = () => {
   const pathname = usePathname();
@@ -13,7 +14,7 @@ const Header: FC = () => {
       <div className='container mx-auto px-4'>
         <nav className='flex justify-between items-center'>
           <Logo />
-          <ul className='flex'>
+          <ul className='hidden md:flex	'>
             <li className='mx-3'>
               <Link
                 className={
@@ -31,7 +32,7 @@ const Header: FC = () => {
                 }
                 href='/games'
               >
-                Games store
+                Game store
               </Link>
             </li>
             <li className='mx-3'>
@@ -57,7 +58,10 @@ const Header: FC = () => {
               </Link>
             </li>
           </ul>
-          <Cart />
+          <div className='flex items-center'>
+            <Cart />
+            <BurgerButton />
+          </div>
         </nav>
       </div>
     </header>
