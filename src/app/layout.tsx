@@ -4,6 +4,7 @@ import StoreProvider from "@/app/StoreProvider";
 import MobileMenu from "@/components/ui/MobileMenu";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Main from "@/components/Main";
 
 const robotoCondensed = Roboto_Condensed({
   variable: "--roboto-condensed",
@@ -17,7 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <StoreProvider>
         <body className={`${robotoCondensed.variable} flex flex-col h-screen`}>
           <Header />
-          {children}
+          <Main>{children}</Main>
           <Footer />
           <MobileMenu />
         </body>

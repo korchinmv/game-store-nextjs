@@ -1,9 +1,10 @@
 import { FC } from "react";
+import Container from "./Container";
 
 const Footer: FC = () => {
   return (
     <footer className='mt-auto'>
-      <div className='container mx-auto px-4'>Футер</div>
+      <Container>Footer</Container>
     </footer>
   );
 };

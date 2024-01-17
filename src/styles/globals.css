@@ -39,3 +39,7 @@ body {
     }
   }
 }
+
+.swiper.main-swiper {
+  z-index: 0;
+}

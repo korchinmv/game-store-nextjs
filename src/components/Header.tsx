@@ -5,13 +5,14 @@ import Link from "next/link";
 import Logo from "./ui/Logo";
 import Cart from "./ui/Cart";
 import BurgerButton from "./ui/BurgerButton";
+import Container from "./Container";
 
 const Header: FC = () => {
   const pathname = usePathname();
 
   return (
     <header className='py-3'>
-      <div className='container mx-auto px-4'>
+      <Container>
         <nav className='flex justify-between items-center'>
           <Logo />
           <ul className='hidden md:flex	'>
@@ -63,7 +64,7 @@ const Header: FC = () => {
             <BurgerButton />
           </div>
         </nav>
-      </div>
+      </Container>
     </header>
   );
 };
