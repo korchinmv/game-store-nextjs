@@ -11,7 +11,7 @@ import "swiper/swiper-bundle.css";
 const MainSlider: FC = () => {
   return (
     <Swiper
-      className='main-swiper border-4 rounded-[20px] border-solid border-[#ed5564] h-[200px] sm:h-[300px] lg:h-[400px] xl:h-[600px]'
+      className='main-swiper mb-4 sm:mb-10 border-4 rounded-[20px] border-solid border-[#ed5564] h-[200px] sm:h-[300px] lg:h-[400px] xl:h-[600px]'
       modules={[Autoplay, EffectFade, A11y, Scrollbar]}
       effect={"fade"}
       loop={true}

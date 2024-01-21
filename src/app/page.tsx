@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import MainSlider from "@/components/MainSlider";
-import Main from "@/components/Main";
 import Container from "@/components/Container";
+import GamesList from "@/components/GamesList";
+import Title from "@/components/Title";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -12,6 +13,9 @@ const Home = () => {
   return (
     <Container>
       <MainSlider />
+      <GamesList>
+        <Title name='The best games for you' />
+      </GamesList>
     </Container>
   );
 };
