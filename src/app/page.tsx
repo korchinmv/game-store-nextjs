@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import MainSlider from "@/components/MainSlider";
 import Container from "@/components/Container";
-import GamesList from "@/components/GamesList";
+import BestGamesList from "@/components/BestGamesList";
 import Title from "@/components/Title";
 
 export const metadata: Metadata = {
@@ -13,9 +13,9 @@ const Home = () => {
   return (
     <Container>
       <MainSlider />
-      <GamesList>
+      <BestGamesList>
         <Title name='The best games for you' />
-      </GamesList>
+      </BestGamesList>
     </Container>
   );
 };
