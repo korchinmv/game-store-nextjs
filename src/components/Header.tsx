@@ -11,11 +11,11 @@ const Header: FC = () => {
   const pathname = usePathname();
 
   return (
-    <header className='py-3'>
+    <header className='py-[5px] mb-[10px] lg:mb-[20px] lg:py-[20px]'>
       <Container>
         <nav className='flex justify-between items-center'>
           <Logo />
-          <ul className='hidden md:flex	'>
+          <ul className='hidden md:flex	text-[20px]'>
             <li className='mx-3'>
               <Link
                 className={
