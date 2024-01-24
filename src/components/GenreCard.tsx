@@ -7,8 +7,8 @@ interface GenreCardProps {
 
 const GenreCard = ({ name, bgImage }: GenreCardProps) => {
   return (
-    <li>
-      <Link className='outline-none' href={"/"}>
+    <li className='bg-[--bg-dark-green] rounded-xl hover:text-[--accent-color]'>
+      <Link className='outline-none ' href={"/"}>
         <article className='p-[20px] border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[--accent-color]'>
           <h4 className='text-center'>{name}</h4>
         </article>
