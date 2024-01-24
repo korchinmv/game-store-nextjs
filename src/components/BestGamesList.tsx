@@ -3,7 +3,7 @@
 import { Children } from "@/types";
 import { useGetGamesQuery } from "@/redux/api/games.api";
 import { Game } from "@/types/Game";
-import { cropFunction } from "@/utils/CropFunction";
+import { cropFunction } from "../utils/cropFunction";
 import GameCard from "./GameCard";
 import LinkMore from "./ui/LinkMore";
 

@@ -4,7 +4,7 @@ import LinkMore from "./ui/LinkMore";
 import { Children } from "@/types";
 import { useGetGenresQuery } from "@/redux/api/genres.api";
 import { Genre } from "@/types/Genre";
-import { cropFunction } from "@/utils/CropFunction";
+import { cropFunction } from "../utils/cropFunction";
 import GenreCard from "./GenreCard";
 
 const PopularGenresList = ({ children }: Children) => {
