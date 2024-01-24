@@ -11,7 +11,7 @@ const Header: FC = () => {
   const pathname = usePathname();
 
   return (
-    <header className='py-[5px] mb-[10px] lg:mb-[20px] lg:py-[20px]'>
+    <header className='py-[10px] mb-[40px] lg:mb-[60px] lg:py-[20px] bg-[--bg-dark-red] shadow-[--accent-color] shadow-[0px_3px_8px_0px]'>
       <Container>
         <nav className='flex justify-between items-center'>
           <Logo />

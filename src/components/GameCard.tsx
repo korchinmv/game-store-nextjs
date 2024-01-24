@@ -13,7 +13,7 @@ const GameCard = ({ name, price, rating, bgImage }: GameCardProps) => {
   return (
     <li>
       <article
-        className='game-card bg-no-repeat bg-cover bg-top md:bg-center h-[170px] md:h-[300px] flex flex-col justify-between border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[#ed5564]'
+        className='game-card bg-no-repeat bg-cover bg-top md:bg-center h-[170px] md:h-[300px] flex flex-col justify-between border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[--accent-color]'
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <Link

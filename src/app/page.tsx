@@ -3,6 +3,7 @@ import MainSlider from "@/components/MainSlider";
 import Container from "@/components/Container";
 import BestGamesList from "@/components/BestGamesList";
 import Title from "@/components/Title";
+import PopularGenresList from "@/components/PopularGenresList";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -16,6 +17,9 @@ const Home = () => {
       <BestGamesList>
         <Title name='The best games for you' />
       </BestGamesList>
+      <PopularGenresList>
+        <Title name='Popular genres' />
+      </PopularGenresList>
     </Container>
   );
 };
