@@ -7,9 +7,18 @@ interface GameCardProps {
   price: number;
   rating: number;
   bgImage: string;
+  id: number;
+  slug: string;
 }
 
-const GameCard = ({ name, price, rating, bgImage }: GameCardProps) => {
+const GameCard = ({
+  name,
+  price,
+  rating,
+  bgImage,
+  id,
+  slug,
+}: GameCardProps) => {
   return (
     <li>
       <article
@@ -19,7 +28,7 @@ const GameCard = ({ name, price, rating, bgImage }: GameCardProps) => {
         <Link
           className='game-card__body block h-full outline-none'
           aria-label='Go to game page'
-          href={"/"}
+          href={`/games/${slug}`}
         >
           <div className='game-card__top flex justify-between p-3'>
             <div className='game-card__rating flex justify-between items-center'>

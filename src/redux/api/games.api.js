@@ -5,7 +5,10 @@ export const gamesApi = api.injectEndpoints({
     getGames: builder.query({
       query: () => `games?key=${process.env.KEY_GAMESTORE}`,
     }),
+    getGameData: builder.query({
+      query: (id) => `games/${id}?key=${process.env.KEY_GAMESTORE}`,
+    }),
   }),
 });
 
-export const { useGetGamesQuery } = gamesApi;
+export const { useGetGamesQuery, useGetGameDataQuery } = gamesApi;

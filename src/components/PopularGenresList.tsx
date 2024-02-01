@@ -5,18 +5,21 @@ import { Children } from "@/types";
 import { useGetGenresQuery } from "@/redux/api/genres.api";
 import { Genre } from "@/types/Genre";
 import { cropFunction } from "../utils/cropFunction";
-import GenreCard from "./GenreCard";
 import { PacmanLoader } from "react-spinners";
+import GenreCard from "./GenreCard";
+import ErrorData from "./ErrorData";
 
 const PopularGenresList = ({ children }: Children) => {
-  const { isLoading, data } = useGetGenresQuery("");
-  console.log(data);
+  const { isLoading, data, error } = useGetGenresQuery("");
+  console.log(error);
+
+  if (error) return <ErrorData errorText='Error data' />;
 
   return (
     <section className='flex flex-col py-[30px] md:mb-[30px]'>
       {children}
-
       <LinkMore name={"More genres"} link={"/genres"} />
+
       {isLoading ? (
         <PacmanLoader className='mx-auto my-0' color='#ed5564' />
       ) : (

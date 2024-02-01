@@ -4,13 +4,16 @@ import { Children } from "@/types";
 import { useGetGamesQuery } from "@/redux/api/games.api";
 import { Game } from "@/types/Game";
 import { cropFunction } from "../utils/cropFunction";
+import { PacmanLoader } from "react-spinners";
 import GameCard from "./GameCard";
 import LinkMore from "./ui/LinkMore";
-import { PacmanLoader } from "react-spinners";
+import ErrorData from "./ErrorData";
 
 const BestGamesList = ({ children }: Children) => {
-  const { isLoading, data } = useGetGamesQuery("");
+  const { isLoading, data, error } = useGetGamesQuery("");
   console.log(data);
+
+  if (error) return <ErrorData errorText='Error data' />;
 
   return (
     <section className='flex flex-col py-[15px] md:mb-[30px]'>
@@ -25,10 +28,12 @@ const BestGamesList = ({ children }: Children) => {
           {cropFunction(data.results, 0, 10).map((game: Game) => (
             <GameCard
               key={game.id}
+              id={game.id}
               name={game.name}
               price={game.playtime}
               rating={game.rating}
               bgImage={game.background_image}
+              slug={game.slug}
             />
           ))}
         </ul>
