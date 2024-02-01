@@ -11,7 +11,6 @@ import ErrorData from "./ErrorData";
 
 const BestGamesList = ({ children }: Children) => {
   const { isLoading, data, error } = useGetGamesQuery("");
-  console.log(data);
 
   if (error) return <ErrorData errorText='Error data' />;
 

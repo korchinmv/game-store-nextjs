@@ -5,12 +5,12 @@ import { useGetGameDataQuery } from "@/redux/api/games.api";
 import { PacmanLoader } from "react-spinners";
 
 interface GamePageProps {
-  params: { id: "string" };
+  params: { slug: "string" };
 }
 
-const GamePage = ({ params: { id } }: GamePageProps) => {
-  const { isLoading, data, error } = useGetGameDataQuery(id);
-  console.log(data);
+const GamePage = ({ params: { slug } }: GamePageProps) => {
+  const { isLoading, data, error } = useGetGameDataQuery(slug);
+
   if (error) return <ErrorData errorText='Error data' />;
 
   return (

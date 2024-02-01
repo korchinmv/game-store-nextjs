@@ -11,14 +11,7 @@ interface GameCardProps {
   slug: string;
 }
 
-const GameCard = ({
-  name,
-  price,
-  rating,
-  bgImage,
-  id,
-  slug,
-}: GameCardProps) => {
+const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
   return (
     <li>
       <article
