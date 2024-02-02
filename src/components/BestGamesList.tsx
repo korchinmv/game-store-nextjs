@@ -3,14 +3,13 @@
 import { Children } from "@/types";
 import { useGetGamesQuery } from "@/redux/api/games.api";
 import { Game } from "@/types/Game";
-import { cropFunction } from "../utils/cropFunction";
 import { PacmanLoader } from "react-spinners";
 import GameCard from "./GameCard";
 import LinkMore from "./ui/LinkMore";
 import ErrorData from "./ErrorData";
 
 const BestGamesList = ({ children }: Children) => {
-  const { isLoading, data, error } = useGetGamesQuery("");
+  const { isLoading, data, error } = useGetGamesQuery(10);
 
   if (error) return <ErrorData errorText='Error data' />;
 
@@ -24,7 +23,7 @@ const BestGamesList = ({ children }: Children) => {
         <PacmanLoader className='mx-auto my-0' color='#ed5564' />
       ) : (
         <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
-          {cropFunction(data.results, 0, 10).map((game: Game) => (
+          {data.results.map((game: Game) => (
             <GameCard
               key={game.id}
               id={game.id}

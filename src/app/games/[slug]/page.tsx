@@ -14,13 +14,15 @@ const GamePage = ({ params: { slug } }: GamePageProps) => {
   if (error) return <ErrorData errorText='Error data' />;
 
   return (
-    <Container>
-      {isLoading ? (
-        <PacmanLoader className='mx-auto my-auto' color='#ed5564' />
-      ) : (
-        <h2>{data.name}</h2>
-      )}
-    </Container>
+    <section>
+      <Container>
+        {isLoading ? (
+          <PacmanLoader className='mx-auto my-auto' color='#ed5564' />
+        ) : (
+          <h1>{data.name}</h1>
+        )}
+      </Container>
+    </section>
   );
 };
 

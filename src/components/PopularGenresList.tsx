@@ -4,13 +4,12 @@ import LinkMore from "./ui/LinkMore";
 import { Children } from "@/types";
 import { useGetGenresQuery } from "@/redux/api/genres.api";
 import { Genre } from "@/types/Genre";
-import { cropFunction } from "../utils/cropFunction";
 import { PacmanLoader } from "react-spinners";
 import GenreCard from "./GenreCard";
 import ErrorData from "./ErrorData";
 
 const PopularGenresList = ({ children }: Children) => {
-  const { isLoading, data, error } = useGetGenresQuery("");
+  const { isLoading, data, error } = useGetGenresQuery(5);
 
   if (error) return <ErrorData errorText='Error data' />;
 
@@ -22,9 +21,15 @@ const PopularGenresList = ({ children }: Children) => {
       {isLoading ? (
         <PacmanLoader className='mx-auto my-0' color='#ed5564' />
       ) : (
-        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 xl:gap-[25px]'>
-          {cropFunction(data.results, 0, 6).map((genre: Genre) => (
-            <GenreCard key={genre.id} name={genre.name} slug={genre.slug} />
+        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
+          {data.results.map((genre: Genre) => (
+            <GenreCard
+              key={genre.id}
+              name={genre.name}
+              slug={genre.slug}
+              bgImage={genre.image_background}
+              games={genre.games}
+            />
           ))}
         </ul>
       )}

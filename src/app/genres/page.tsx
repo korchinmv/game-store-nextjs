@@ -8,7 +8,7 @@ import GenreCard from "@/components/GenreCard";
 import Title from "@/components/Title";
 
 const GenresPage = () => {
-  const { isLoading, data, error } = useGetGenresQuery("");
+  const { isLoading, data, error } = useGetGenresQuery(0);
 
   if (error) return <ErrorData errorText='Error data' />;
 
@@ -22,7 +22,13 @@ const GenresPage = () => {
         ) : (
           <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 xl:gap-[25px] pt-[10px] md:pt-[40px]'>
             {data.results.map((genre: Genre) => (
-              <GenreCard key={genre.id} name={genre.name} slug={genre.slug} />
+              <GenreCard
+                key={genre.id}
+                name={genre.name}
+                slug={genre.slug}
+                bgImage={genre.image_background}
+                games={genre.games}
+              />
             ))}
           </ul>
         )}
