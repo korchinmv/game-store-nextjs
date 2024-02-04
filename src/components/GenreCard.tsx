@@ -9,8 +9,6 @@ interface GenreCardProps {
 }
 
 const GenreCard = ({ name, slug, bgImage, games }: GenreCardProps) => {
-  console.log(games);
-
   return (
     <li className='rounded-xl'>
       <article

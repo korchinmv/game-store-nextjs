@@ -6,10 +6,20 @@ export const gamesApi = api.injectEndpoints({
       query: (quantity) =>
         `games?page_size=${quantity}&key=${process.env.KEY_GAMESTORE}`,
     }),
+    getGamesByGenre: builder.query({
+      query: (args) => {
+        const { id, quantity } = args;
+        return `games?genres=${id}&page_size=${quantity}&filter=true&comments=true&key=${process.env.KEY_GAMESTORE}`;
+      },
+    }),
     getGameData: builder.query({
       query: (id) => `games/${id}?key=${process.env.KEY_GAMESTORE}`,
     }),
   }),
 });
 
-export const { useGetGamesQuery, useGetGameDataQuery } = gamesApi;
+export const {
+  useGetGamesQuery,
+  useGetGameDataQuery,
+  useGetGamesByGenreQuery,
+} = gamesApi;

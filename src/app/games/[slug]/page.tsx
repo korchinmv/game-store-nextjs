@@ -2,13 +2,14 @@
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import { useGetGameDataQuery } from "@/redux/api/games.api";
+import { ReactNode } from "react";
 import { PacmanLoader } from "react-spinners";
 
 interface GamePageProps {
   params: { slug: "string" };
 }
 
-const GamePage = ({ params: { slug } }: GamePageProps) => {
+const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
   const { isLoading, data, error } = useGetGameDataQuery(slug);
 
   if (error) return <ErrorData errorText='Error data' />;
