@@ -1,26 +1,19 @@
 "use client";
-
-import LinkMore from "./ui/LinkMore";
-import { Children } from "@/types";
-import { useGetGenresQuery } from "@/redux/api/genres.api";
 import { Genre } from "@/types/Genre";
-import { PacmanLoader } from "react-spinners";
+import LinkMore from "./ui/LinkMore";
 import GenreCard from "./GenreCard";
-import ErrorData from "./ErrorData";
+import Title from "./Title";
 
-const PopularGenresList = ({ children }: Children) => {
-  const { isLoading, data, error } = useGetGenresQuery(5);
+interface PopularGenresListProps {
+  data: any;
+}
 
-  if (error) return <ErrorData errorText='Error data' />;
-
+const PopularGenresList = ({ data }: PopularGenresListProps) => {
   return (
     <section className='flex flex-col py-[30px] md:mb-[30px]'>
-      {children}
-      <LinkMore name={"More genres"} link={"/genres"} />
-
-      {isLoading ? (
-        <PacmanLoader className='mx-auto my-0' color='#ed5564' />
-      ) : (
+      <>
+        <Title name='Popular Genres' />
+        <LinkMore name={"More genres"} link={"/genres"} />
         <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
           {data.results.map((genre: Genre) => (
             <GenreCard
@@ -32,7 +25,7 @@ const PopularGenresList = ({ children }: Children) => {
             />
           ))}
         </ul>
-      )}
+      </>
     </section>
   );
 };

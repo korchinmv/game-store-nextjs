@@ -1,9 +1,9 @@
 "use client";
-import Container from "@/components/Container";
-import ErrorData from "@/components/ErrorData";
 import { useGetGameDataQuery } from "@/redux/api/games.api";
 import { ReactNode } from "react";
 import { PacmanLoader } from "react-spinners";
+import Container from "@/components/Container";
+import ErrorData from "@/components/ErrorData";
 
 interface GamePageProps {
   params: { slug: "string" };

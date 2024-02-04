@@ -1,25 +1,15 @@
 "use client";
-import { useGetGenresQuery } from "@/redux/api/genres.api";
-import { Genre } from "@/types/Genre";
 import Title from "@/components/Title";
 import GameCard from "@/components/GameCard";
+import Container from "@/components/Container";
 
-interface GenresPageProps {
-  params: { slug: "string" };
-}
-
-const GamesPage = ({ params: { slug } }: GenresPageProps) => {
-  const { isLoading, data, error } = useGetGenresQuery("");
-  console.log(data);
-
+const GamesPage = () => {
   return (
     <section>
-      <Title name={`${slug} genre`} />
-      <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 xl:gap-[25px]'>
-        {/* {data.results.map((genre: Genre) => (
-          <GameCard key={genre.id} name={genre.name} />
-        ))} */}
-      </ul>
+      <Container>
+        <Title name={"All Games"} />
+        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 xl:gap-[25px]'></ul>
+      </Container>
     </section>
   );
 };

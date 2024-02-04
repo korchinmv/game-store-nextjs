@@ -23,15 +23,14 @@ const GenreGames = ({ params: { slug } }: GenreGamesPageProps): ReactNode => {
   const newTitle = firstWordToUppercase(slug);
 
   if (error) return <ErrorData errorText='Error data' />;
-  console.log(data);
 
   return (
     <section className='flex flex-col py-[15px] md:mb-[30px]'>
       <Container>
-        <Title name={`${newTitle} games`} />
+        <Title name={`${newTitle} Games`} />
 
         {isLoading ? (
-          <PacmanLoader className='mx-auto my-0' color='#ed5564' />
+          <PacmanLoader className='mx-auto my-0 mt-[40px]' color='#ed5564' />
         ) : (
           <>
             <DescriptionGenre text={data.description} />

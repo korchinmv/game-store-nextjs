@@ -1,27 +1,19 @@
 "use client";
-
-import { Children } from "@/types";
-import { useGetGamesQuery } from "@/redux/api/games.api";
 import { Game } from "@/types/Game";
-import { PacmanLoader } from "react-spinners";
 import GameCard from "./GameCard";
 import LinkMore from "./ui/LinkMore";
-import ErrorData from "./ErrorData";
+import Title from "./Title";
 
-const BestGamesList = ({ children }: Children) => {
-  const { isLoading, data, error } = useGetGamesQuery(10);
+interface BestGamesListProps {
+  data: any;
+}
 
-  if (error) return <ErrorData errorText='Error data' />;
-
+const BestGamesList = ({ data }: BestGamesListProps) => {
   return (
     <section className='flex flex-col py-[15px] md:mb-[30px]'>
-      {children}
-
-      <LinkMore name={"More games"} link={"/games"} />
-
-      {isLoading ? (
-        <PacmanLoader className='mx-auto my-0' color='#ed5564' />
-      ) : (
+      <>
+        <Title name='The best Games for you' />
+        <LinkMore name={"More ames"} link={"/games"} />
         <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
           {data.results.map((game: Game) => (
             <GameCard
@@ -35,7 +27,7 @@ const BestGamesList = ({ children }: Children) => {
             />
           ))}
         </ul>
-      )}
+      </>
     </section>
   );
 };
