@@ -11,5 +11,5 @@ export type Genre = {
   image_background: string;
   name: string;
   slug: string;
-  games: GenreGame[];
+  games?: GenreGame[];
 };

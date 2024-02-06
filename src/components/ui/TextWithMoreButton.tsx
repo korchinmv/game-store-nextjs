@@ -2,14 +2,19 @@
 import { MouseEvent, useState } from "react";
 import { trimString } from "../../utils/trimString";
 
-interface DescriptionGenreProps {
+interface TextWithMoreButtonProps {
   text: string;
 }
 
-const DescriptionGenre = ({ text }: DescriptionGenreProps) => {
+const TextWithMoreButton = ({ text }: TextWithMoreButtonProps) => {
   const [fullText, setFulltext] = useState(false);
+  let newString;
 
-  const newString = text.substring(text.length - 4, 3);
+  if (text[0] === "<") {
+    newString = text.substring(text.length - 4, 3);
+  } else {
+    newString = text;
+  }
 
   const handleClick = (e: MouseEvent<HTMLSpanElement>): void => {
     setFulltext(!fullText);
@@ -17,7 +22,7 @@ const DescriptionGenre = ({ text }: DescriptionGenreProps) => {
 
   return (
     <p className='mb-[15px] md:mb-[25px]'>
-      <span>{fullText ? newString : trimString(text, 260)}</span>
+      <span> {fullText ? newString : trimString(text, 260)}</span>
       {!fullText ? (
         <span
           className='cursor-pointer transition bg-[--white-color] hover:bg-[--accent-color] text-[--bg-color] rounded-[5px] py-[1px] px-[5px]'
@@ -32,4 +37,4 @@ const DescriptionGenre = ({ text }: DescriptionGenreProps) => {
   );
 };
 
-export default DescriptionGenre;
+export default TextWithMoreButton;

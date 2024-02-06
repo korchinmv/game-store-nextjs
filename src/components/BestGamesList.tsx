@@ -15,7 +15,7 @@ const BestGamesList = ({ data }: BestGamesListProps) => {
         <Title name='The best Games for you' />
         <LinkMore name={"More ames"} link={"/games"} />
         <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
-          {data.results.map((game: Game) => (
+          {data?.results.map((game: Game) => (
             <GameCard
               key={game.id}
               id={game.id}

@@ -15,6 +15,9 @@ export const gamesApi = api.injectEndpoints({
     getGameData: builder.query({
       query: (id) => `games/${id}?key=${process.env.KEY_GAMESTORE}`,
     }),
+    getGameScreenshots: builder.query({
+      query: (id) => `games/${id}/screenshots?key=${process.env.KEY_GAMESTORE}`,
+    }),
   }),
 });
 
@@ -22,4 +25,5 @@ export const {
   useGetGamesQuery,
   useGetGameDataQuery,
   useGetGamesByGenreQuery,
+  useGetGameScreenshotsQuery,
 } = gamesApi;

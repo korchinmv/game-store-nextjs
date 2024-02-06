@@ -6,7 +6,7 @@ import Container from "@/components/Container";
 import Title from "@/components/Title";
 import ErrorData from "@/components/ErrorData";
 import React, { ReactNode } from "react";
-import DescriptionGenre from "@/components/ui/DescriptionGenre";
+import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
 import GameCard from "@/components/GameCard";
 import { Game } from "@/types/Game";
 
@@ -33,9 +33,9 @@ const GenreGames = ({ params: { slug } }: GenreGamesPageProps): ReactNode => {
           <PacmanLoader className='mx-auto my-0 mt-[40px]' color='#ed5564' />
         ) : (
           <>
-            <DescriptionGenre text={data.description} />
+            <TextWithMoreButton text={data.description} />
             <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
-              {data.results.map((game: Game) => (
+              {data?.results.map((game: Game) => (
                 <GameCard
                   key={game.id}
                   id={game.id}
