@@ -15,6 +15,9 @@ const robotoCondensed = Roboto_Condensed({
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en'>
+      <head>
+        <link rel='icon' href='/favicon.ico' />
+      </head>
       <StoreProvider>
         <body className={`${robotoCondensed.variable} flex flex-col h-screen`}>
           <Header />
