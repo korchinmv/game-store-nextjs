@@ -13,6 +13,8 @@ import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import Image from "next/image";
 import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
+import BuyBlock from "@/components/ui/BuyBlock";
+import Rating from "@/components/Rating";
 
 interface GamePageProps {
   params: { slug: "string" };
@@ -47,7 +49,7 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
           <PacmanLoader className='mx-auto my-auto' color='#ed5564' />
         ) : (
           <div className='flex justify-between'>
-            <div className='screenshots mr-[50px] max-w-[600px] w-full shrink-0 flex flex-col justify-center items-center'>
+            <div className='screenshots mr-[40px] max-w-[600px] w-full shrink-0 flex flex-col justify-center items-center'>
               {loadingScreenshots ? (
                 <ClipLoader color='#ed5564' />
               ) : (
@@ -68,10 +70,37 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
               )}
             </div>
 
-            <div className='content max-w-[600px] mr-[50px	]'>
-              <h1 className='text-[36px] uppercase mb-[20px]'>
+            <div className='content max-w-full grow-0'>
+              <h1 className='text-[42px] uppercase mb-[20px]'>
                 {dataGame.name}
               </h1>
+
+              <div className='flex justify-between mb-[30px]'>
+                <BuyBlock
+                  buttonText='Add to cart'
+                  price={dataGame.playtime}
+                  labelName={dataGame.name}
+                  cssStyles='mr-[30px]'
+                />
+
+                <div className='rating border border-[--accent-color] p-[20px] w-full'>
+                  <h2 className='text-[24px] mb-[10px] text-center'>
+                    Game rating
+                  </h2>
+
+                  <ul className='flex justify-around items-stretch'>
+                    <li className='flex items-center mr-[10px]'>
+                      <span className='mr-[10px]'>Metacritic:</span>
+                      <Rating number={dataGame.metacritic} />
+                    </li>
+                    <li className='flex items-center'>
+                      <span className='mr-[10px]'>Overall rating:</span>
+                      <Rating number={dataGame.rating} />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
               <TextWithMoreButton text={dataGame.description_raw} />
 
               <table className='w-full'>
@@ -122,13 +151,6 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                   </tr>
                 </tbody>
               </table>
-            </div>
-
-            <div className='buy border p-[10px] self-start w-[300px]'>
-              <span className='block'>{`Price: ${dataGame.playtime}$`}</span>
-              <button aria-label={`Add to cart ${dataGame.name} game`}>
-                Add to cart
-              </button>
             </div>
           </div>
         )}

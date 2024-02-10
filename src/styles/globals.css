@@ -9,6 +9,9 @@
   --black: #000;
   --bg-dark-red: #080000;
   --bg-dark-green: #2a4545;
+  --green-color: #008000;
+  --yellow-color: #f4a900;
+  --red-color: #b00000;
 }
 
 body {
@@ -25,7 +28,7 @@ body {
     padding: 3px;
     border-radius: 8px;
     transition: color 0.3s, opacity 0.3s, text-decoration-color 0.3s,
-      box-shadow 0.3s, transform 0.3s;
+      box-shadow 0.3s, transform 0.3s, background-color 0.3s;
 
     &:focus {
       box-shadow: 0 0 0 2px var(--accent-color);
