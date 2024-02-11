@@ -14,6 +14,7 @@ export const checkRatingForColor = (number) => {
     if (number >= 4 && number < 5.1) {
       return "bg-[--green-color]";
     } else if (number >= 3 && number < 4) {
+      console.log(number);
       return "bg-[--yellow-color]";
     } else if (number >= 0 && number < 3) {
       return "bg-[--red-color]";

@@ -15,6 +15,8 @@ import Image from "next/image";
 import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
 import BuyBlock from "@/components/ui/BuyBlock";
 import Rating from "@/components/Rating";
+import { Developer } from "@/types/Developer";
+import SliderGame from "@/components/ui/SliderGame";
 
 interface GamePageProps {
   params: { slug: "string" };
@@ -38,7 +40,7 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
   } = useGetGameDlcQuery(slug);
 
   if (errorGame || errorScreenshots || errorGameDlc)
-    return <ErrorData errorText='Error data game' />;
+    return <ErrorData errorText="Error data game" />;
   console.log(dataGame);
   console.log(dataGameDlc);
 
@@ -46,55 +48,42 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
     <section>
       <Container>
         {loadingGameData ? (
-          <PacmanLoader className='mx-auto my-auto' color='#ed5564' />
+          <PacmanLoader className="mx-auto my-auto" color="#ed5564" />
         ) : (
-          <div className='flex justify-between'>
-            <div className='screenshots mr-[40px] max-w-[600px] w-full shrink-0 flex flex-col justify-center items-center'>
+          <div className="flex justify-between">
+            <div className="screenshots mr-[40px] max-w-[600px] w-full shrink-0">
               {loadingScreenshots ? (
-                <ClipLoader color='#ed5564' />
+                <ClipLoader color="#ed5564" />
               ) : (
-                dataScreenshots.results.map((screen: Screenshot) => {
-                  return (
-                    <Image
-                      className='w-full h-auto cursor-pointer'
-                      src={screen.image}
-                      alt={`${dataGame.name} picture`}
-                      priority={true}
-                      width='0'
-                      height='0'
-                      sizes='100vw'
-                      key={screen.id}
-                    />
-                  );
-                })
+                <SliderGame screenshots={dataScreenshots.results} />
               )}
             </div>
 
-            <div className='content max-w-full grow-0'>
-              <h1 className='text-[42px] uppercase mb-[20px]'>
+            <div className="content max-w-full grow-0">
+              <h1 className="text-[42px] uppercase mb-[20px] leading-none	">
                 {dataGame.name}
               </h1>
 
-              <div className='flex justify-between mb-[30px]'>
+              <div className="flex justify-between mb-[30px]">
                 <BuyBlock
-                  buttonText='Add to cart'
+                  buttonText="Add to cart"
                   price={dataGame.playtime}
                   labelName={dataGame.name}
-                  cssStyles='mr-[30px]'
+                  cssStyles="mr-[30px]"
                 />
 
-                <div className='rating border border-[--accent-color] p-[20px] w-full'>
-                  <h2 className='text-[24px] mb-[10px] text-center'>
+                <div className="rating border border-[--accent-color] p-[20px] w-full">
+                  <h2 className="text-[24px] mb-[10px] text-center">
                     Game rating
                   </h2>
 
-                  <ul className='flex justify-around items-stretch'>
-                    <li className='flex items-center mr-[10px]'>
-                      <span className='mr-[10px]'>Metacritic:</span>
+                  <ul className="flex justify-around items-stretch">
+                    <li className="flex items-center mr-[10px]">
+                      <span className="mr-[10px]">Metacritic:</span>
                       <Rating number={dataGame.metacritic} />
                     </li>
-                    <li className='flex items-center'>
-                      <span className='mr-[10px]'>Overall rating:</span>
+                    <li className="flex items-center">
+                      <span className="mr-[10px]">Overall rating:</span>
                       <Rating number={dataGame.rating} />
                     </li>
                   </ul>
@@ -103,13 +92,13 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
 
               <TextWithMoreButton text={dataGame.description_raw} />
 
-              <table className='w-full'>
+              <table className="w-full">
                 <tbody>
                   <tr>
-                    <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                    <td className="bg-[--accent-color] py-[10px] px-[20px]">
                       {dataGame.genres.length > 1 ? "Genres:" : "Genre:"}
                     </td>
-                    <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                    <td className="bg-[--accent-color] py-[10px] px-[20px]">
                       {dataGame.genres.map((genre: Genre, index: number) => {
                         return (
                           <span key={genre.id}>
@@ -121,12 +110,12 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                     </td>
                   </tr>
                   <tr>
-                    <td className='py-[10px] px-[20px]'>
+                    <td className="py-[10px] px-[20px]">
                       {dataGame.platforms.length > 1
                         ? "Platforms:"
                         : "Platform:"}
                     </td>
-                    <td className='py-[10px] px-[20px]'>
+                    <td className="py-[10px] px-[20px]">
                       {dataGame.platforms.map(
                         (obj: Platform, index: number) => {
                           return (
@@ -142,11 +131,28 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                     </td>
                   </tr>
                   <tr>
-                    <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                    <td className="bg-[--accent-color] py-[10px] px-[20px]">
                       Release:
                     </td>
-                    <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                    <td className="bg-[--accent-color] py-[10px] px-[20px]">
                       {dataGame.released.split("-").reverse().join(".")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-[10px] px-[20px]">Developers:</td>
+                    <td className="py-[10px] px-[20px]">
+                      {dataGame.developers.map(
+                        (developer: Developer, index: number) => {
+                          return (
+                            <span key={developer.id}>
+                              {developer.name}
+                              {index < dataGame.developers.length - 1
+                                ? ", "
+                                : ""}
+                            </span>
+                          );
+                        }
+                      )}
                     </td>
                   </tr>
                 </tbody>
