@@ -8,12 +8,15 @@ interface TextWithMoreButtonProps {
 
 const TextWithMoreButton = ({ text }: TextWithMoreButtonProps) => {
   const [fullText, setFulltext] = useState(false);
+
   let newString;
 
-  if (text[0] === "<") {
-    newString = text.substring(text.length - 4, 3);
-  } else {
-    newString = text;
+  if (text) {
+    if (text[0] !== "<") {
+      newString = text;
+    } else {
+      newString = text.substring(text.length - 4, 3);
+    }
   }
 
   const handleClick = (e: MouseEvent<HTMLSpanElement>): void => {
@@ -21,11 +24,11 @@ const TextWithMoreButton = ({ text }: TextWithMoreButtonProps) => {
   };
 
   return (
-    <p className='mb-[15px] md:mb-[25px]'>
+    <p className="mb-[15px] md:mb-[25px]">
       <span> {fullText ? newString : trimString(text, 260)}</span>
       {!fullText ? (
         <span
-          className='cursor-pointer transition bg-[--white-color] hover:bg-[--accent-color] text-[--bg-color] rounded-[5px] py-[1px] px-[5px]'
+          className="cursor-pointer transition bg-[--white-color] hover:bg-[--accent-color] text-[--bg-color] rounded-[5px] py-[1px] px-[5px]"
           onClick={handleClick}
         >
           read more

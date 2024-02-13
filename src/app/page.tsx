@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import MainSlider from "@/components/MainSlider";
 import Container from "@/components/Container";
-import BestGamesList from "@/components/BestGamesList";
-import PopularGenresList from "@/components/PopularGenresList";
 import GetDataWrapper from "@/components/GetDataWrapper";
+import Title from "@/components/Title";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -13,7 +12,11 @@ export const metadata: Metadata = {
 const Home = () => {
   return (
     <Container>
-      <MainSlider />
+      <div className="mb-[10px] sm:mb-[20px] flex flex-col flex-col-reverse items-center justify-center sm:flex-row">
+        <MainSlider />
+        <Title name={"Game store by KorchinMV"} />
+      </div>
+
       <GetDataWrapper />
     </Container>
   );

@@ -56,6 +56,11 @@ body {
 }
 
 .slider-game-page {
+  img {
+    object-fit: cover;
+    height: 100px;
+  }
+
   .swiper-slide-thumb-active {
     border: 1px solid #ed5564;
   }
@@ -71,4 +76,9 @@ body {
   .swiper-pagination-bullet {
     background-color: var(--accent-color);
   }
+}
+
+.swiper.main-swiper {
+  margin-left: 0;
+  margin-right: 30px;
 }

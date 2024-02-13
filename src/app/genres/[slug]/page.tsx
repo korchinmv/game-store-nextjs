@@ -3,7 +3,7 @@ import { firstWordToUppercase } from "../../../utils/firstWordToUppercase";
 import { useGetGamesByGenreQuery } from "@/redux/api/games.api";
 import { PacmanLoader } from "react-spinners";
 import Container from "@/components/Container";
-import Title from "@/components/Title";
+import Title from "@/components/SubTitle";
 import ErrorData from "@/components/ErrorData";
 import React, { ReactNode } from "react";
 import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
@@ -22,19 +22,19 @@ const GenreGames = ({ params: { slug } }: GenreGamesPageProps): ReactNode => {
 
   const newTitle = firstWordToUppercase(slug);
 
-  if (error) return <ErrorData errorText='Error data' />;
+  if (error) return <ErrorData errorText="Error data" />;
 
   return (
-    <section className='flex flex-col py-[15px] md:mb-[30px]'>
+    <section className="flex flex-col py-[15px] md:mb-[30px]">
       <Container>
         <Title name={`${newTitle} Games`} />
 
         {isLoading ? (
-          <PacmanLoader className='mx-auto my-0 mt-[40px]' color='#ed5564' />
+          <PacmanLoader className="mx-auto my-0 mt-[40px]" color="#ed5564" />
         ) : (
           <>
             <TextWithMoreButton text={data.description} />
-            <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
+            <ul className="grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]">
               {data?.results.map((game: Game) => (
                 <GameCard
                   key={game.id}
