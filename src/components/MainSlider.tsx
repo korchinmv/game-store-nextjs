@@ -11,7 +11,7 @@ import "swiper/swiper-bundle.css";
 const MainSlider: FC = () => {
   return (
     <Swiper
-      className="main-swiper border-4 rounded-[20px] border-solid border-[#ed5564] h-[150px]  sm:h-[200px] xl:h-[300px] xl:w-[550px]"
+      className='main-swiper border-4 rounded-[20px] border-solid border-[#ed5564] h-[200px] sm:h-[300px] xl:w-full'
       modules={[Autoplay, EffectFade, A11y, Scrollbar]}
       effect={"fade"}
       loop={true}
@@ -24,26 +24,26 @@ const MainSlider: FC = () => {
     >
       <SwiperSlide>
         <Image
-          className="w-full h-full object-cover object-center rounded-[5px]"
+          className='w-full h-full object-cover object-center rounded-[5px]'
           src={firstSlide}
           priority
-          alt="slide game"
+          alt='slide game'
         />
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          className="w-full h-full object-cover object-center rounded-[5px] "
+          className='w-full h-full object-cover object-center rounded-[5px] '
           src={secondSlide}
           priority
-          alt="slide game"
+          alt='slide game'
         />
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          className="w-full h-full object-cover object-center rounded-[5px]"
+          className='w-full h-full object-cover object-center rounded-[5px]'
           src={thirdSlide}
           priority
-          alt="slide game"
+          alt='slide game'
         />
       </SwiperSlide>
     </Swiper>

@@ -4,8 +4,8 @@ import {
   useGetGameDlcQuery,
   useGetGameScreenshotsQuery,
 } from "@/redux/api/games.api";
-import { ReactNode } from "react";
-import { ClipLoader, PacmanLoader } from "react-spinners";
+import { CSSProperties, ReactNode } from "react";
+import { ClipLoader, PacmanLoader, PuffLoader } from "react-spinners";
 import { Genre } from "@/types/Genre";
 import { Platform } from "@/types/Platform";
 import { Developer } from "@/types/Developer";
@@ -18,6 +18,7 @@ import Rating from "@/components/Rating";
 import SliderGame from "@/components/ui/SliderGame";
 import SubTitle from "@/components/SubTitle";
 import GameCard from "@/components/GameCard";
+import Title from "@/components/Title";
 
 interface GamePageProps {
   params: { slug: "string" };
@@ -41,47 +42,51 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
   } = useGetGameDlcQuery(slug);
 
   if (errorGame || errorScreenshots || errorGameDlc)
-    return <ErrorData errorText="Error data game" />;
+    return <ErrorData errorText='Error data game' />;
   console.log(dataGame);
   console.log(dataGameDlc);
+
+  const override: CSSProperties = {
+    display: "block",
+    margin: "80px auto 0 auto",
+    borderColor: "#ed5564",
+  };
 
   return (
     <section>
       <Container>
         {loadingGameData && loadingGameDlc ? (
-          <PacmanLoader className="mx-auto my-auto" color="#ed5564" />
+          <PuffLoader cssOverride={override} color={"#ed5564"} />
         ) : (
           <>
-            <div className="flex justify-between mb-[30px]">
-              <div className="screenshots mr-[40px] max-w-[600px] w-full shrink-0">
+            <div className='flex justify-between mb-[30px]'>
+              <div className='screenshots mr-[40px] max-w-[600px] w-full shrink-0'>
                 {loadingScreenshots ? (
-                  <ClipLoader color="#ed5564" />
+                  <ClipLoader cssOverride={override} color='#ed5564' />
                 ) : (
                   <SliderGame screenshots={dataScreenshots.results} />
                 )}
               </div>
 
-              <div className="content max-w-full grow-0">
-                <h1 className="text-[42px] uppercase mb-[20px] leading-none	">
-                  {dataGame?.name}
-                </h1>
+              <div className='content max-w-full grow-0'>
+                <Title name={dataGame?.name} />
 
-                <div className="flex justify-between mb-[30px]">
+                <div className='flex justify-between mb-[30px]'>
                   <BuyBlock
-                    buttonText="Add to cart"
+                    buttonText='Add to cart'
                     price={dataGame?.playtime}
                     labelName={dataGame?.name}
-                    cssStyles="mr-[30px]"
+                    cssStyles='mr-[30px]'
                   />
 
-                  <div className="rating border border-[--accent-color] p-[20px] w-full">
-                    <h2 className="text-[24px] mb-[10px] text-center">
+                  <div className='rating border border-[--accent-color] p-[20px] w-full'>
+                    <h2 className='text-[24px] mb-[10px] text-center'>
                       Game rating
                     </h2>
 
-                    <ul className="flex justify-around items-stretch">
+                    <ul className='flex justify-around items-stretch'>
                       {dataGame?.metacritic ? (
-                        <li className="flex items-center mr-[10px]">
+                        <li className='flex items-center mr-[10px]'>
                           <Rating
                             name={"Metacritic:"}
                             number={dataGame?.metacritic}
@@ -89,7 +94,7 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                         </li>
                       ) : null}
                       {dataGame?.rating ? (
-                        <li className="flex items-center">
+                        <li className='flex items-center'>
                           <Rating
                             name={"Overall rating:"}
                             number={dataGame?.rating}
@@ -102,13 +107,13 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
 
                 <TextWithMoreButton text={dataGame?.description_raw} />
 
-                <table className="w-full">
+                <table className='w-full'>
                   <tbody>
                     <tr>
-                      <td className="bg-[--accent-color] py-[10px] px-[20px]">
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
                         {dataGame?.genres.length > 1 ? "Genres:" : "Genre:"}
                       </td>
-                      <td className="bg-[--accent-color] py-[10px] px-[20px]">
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
                         {dataGame?.genres.map((genre: Genre, index: number) => {
                           return (
                             <span key={genre.id}>
@@ -120,12 +125,12 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-[10px] px-[20px]">
+                      <td className='py-[10px] px-[20px]'>
                         {dataGame?.platforms.length > 1
                           ? "Platforms:"
                           : "Platform:"}
                       </td>
-                      <td className="py-[10px] px-[20px]">
+                      <td className='py-[10px] px-[20px]'>
                         {dataGame?.platforms.map(
                           (obj: Platform, index: number) => {
                             return (
@@ -141,16 +146,16 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="bg-[--accent-color] py-[10px] px-[20px]">
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
                         Release:
                       </td>
-                      <td className="bg-[--accent-color] py-[10px] px-[20px]">
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
                         {dataGame?.released.split("-").reverse().join(".")}
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-[10px] px-[20px]">Developers:</td>
-                      <td className="py-[10px] px-[20px]">
+                      <td className='py-[10px] px-[20px]'>Developers:</td>
+                      <td className='py-[10px] px-[20px]'>
                         {dataGame?.developers.map(
                           (developer: Developer, index: number) => {
                             return (
@@ -174,7 +179,7 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
               <SubTitle name={"DLC for this Game"} />
             ) : null}
 
-            <ul className="grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px] mb-[20px]">
+            <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px] mb-[20px]'>
               {dataGameDlc?.results.map((game: Game) => (
                 <GameCard
                   key={game.id}

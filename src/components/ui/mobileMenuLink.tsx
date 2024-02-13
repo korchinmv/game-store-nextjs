@@ -1,6 +1,4 @@
 "use client";
-
-import { toggleMenuSelector } from "@/redux/features/mobileMenu/toggleMenuSelector";
 import { toggleState } from "@/redux/features/mobileMenu/toggleMenuSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import Link from "next/link";

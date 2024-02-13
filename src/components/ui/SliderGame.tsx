@@ -12,10 +12,11 @@ interface Screens {
 
 const SliderGame = ({ screenshots }: Screens) => {
   const [activeThumb, setActiveThumb] = useState<any>(null);
+
   return (
     <>
       <Swiper
-        className="thumbs-slider-game-page w-full mb-[15px]"
+        className='thumbs-slider-game-page w-full mb-[15px]'
         thumbs={{
           swiper: activeThumb && !activeThumb.destroyed ? activeThumb : null,
         }}
@@ -29,13 +30,13 @@ const SliderGame = ({ screenshots }: Screens) => {
           return (
             <SwiperSlide key={screenshot.id}>
               <Image
-                className="w-full h-auto object-cover object-center"
+                className='w-full h-auto object-cover object-center'
                 src={screenshot.image}
                 priority
-                alt="game screenshot"
-                width="0"
-                height="0"
-                sizes="100vw"
+                alt='game screenshot'
+                width='0'
+                height='0'
+                sizes='100vw'
               />
             </SwiperSlide>
           );
@@ -49,20 +50,19 @@ const SliderGame = ({ screenshots }: Screens) => {
         slidesPerView={3}
         freeMode={true}
         navigation={true}
-        loop={true}
         watchSlidesProgress={true}
-        className="slider-game-page w-full h-auto"
+        className='slider-game-page w-full h-auto'
       >
         {screenshots.map((screenshot: Screenshot) => {
           return (
             <SwiperSlide key={screenshot.id}>
               <Image
-                className="object-cover object-center cursor-pointer"
+                className='object-cover object-center cursor-pointer'
                 src={screenshot.image}
                 priority
-                alt="game slide picture"
-                width="200"
-                height="100"
+                alt='game slide picture'
+                width='200'
+                height='100'
               />
             </SwiperSlide>
           );

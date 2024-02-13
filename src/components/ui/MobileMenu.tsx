@@ -1,7 +1,7 @@
 "use client";
-import CloseButton from "./CloseButton";
 import { useAppSelector } from "@/redux/hooks";
 import { toggleMenuSelector } from "@/redux/features/mobileMenu/toggleMenuSelector";
+import CloseButton from "./CloseButton";
 import MobileMenuLink from "./mobileMenuLink";
 
 const MobileMenu = () => {

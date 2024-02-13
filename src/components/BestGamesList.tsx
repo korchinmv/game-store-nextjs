@@ -10,11 +10,11 @@ interface BestGamesListProps {
 
 const BestGamesList = ({ data }: BestGamesListProps) => {
   return (
-    <section className="flex flex-col py-[15px] md:mb-[30px]">
+    <section className='flex flex-col py-[15px] md:mb-[30px]'>
       <>
-        <SubTitle name="The best Games for you" />
-        <LinkMore name={"More ames"} link={"/games"} />
-        <ul className="grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]">
+        <SubTitle name='The best Games for you' />
+        <LinkMore name={"More Games"} link={"/games"} />
+        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
           {data?.results.map((game: Game) => (
             <GameCard
               key={game.id}

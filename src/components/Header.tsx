@@ -58,6 +58,16 @@ const Header: FC = () => {
                 News
               </Link>
             </li>
+            <li className='mx-3'>
+              <Link
+                className={
+                  pathname === "/about" ? "animation text-red-400" : "animation"
+                }
+                href='/about'
+              >
+                About project
+              </Link>
+            </li>
           </ul>
           <div className='flex items-center'>
             <Cart />

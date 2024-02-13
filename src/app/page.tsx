@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const Home = () => {
   return (
     <Container>
-      <div className="mb-[10px] sm:mb-[20px] flex flex-col flex-col-reverse items-center justify-center sm:flex-row">
+      <div className='mb-[10px] sm:mb-[20px] flex flex-col flex-col-reverse sm:items-center justify-center sm:flex-row'>
         <MainSlider />
         <Title name={"Game store by KorchinMV"} />
       </div>

@@ -23,21 +23,21 @@ const TextWithMoreButton = ({ text }: TextWithMoreButtonProps) => {
     setFulltext(!fullText);
   };
 
-  return (
-    <p className="mb-[15px] md:mb-[25px]">
+  return text?.length !== 0 ? (
+    <p className='mb-[15px] md:mb-[25px]'>
       <span> {fullText ? newString : trimString(text, 260)}</span>
       {!fullText ? (
-        <span
-          className="cursor-pointer transition bg-[--white-color] hover:bg-[--accent-color] text-[--bg-color] rounded-[5px] py-[1px] px-[5px]"
+        <button
+          className='animation transition bg-[--white-color] hover:bg-[--accent-color] text-[--bg-color] hover:text-[--white-color] rounded-[5px] py-[1px] px-[5px]'
           onClick={handleClick}
         >
           read more
-        </span>
+        </button>
       ) : (
         ""
       )}
     </p>
-  );
+  ) : null;
 };
 
 export default TextWithMoreButton;

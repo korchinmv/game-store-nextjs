@@ -13,7 +13,7 @@ const BuyBlock = ({
   labelName,
   cssStyles,
 }: BuyBlockProps) => {
-  return (
+  return price !== 0 ? (
     <div
       className={`buy border border-[--accent-color] p-[20px] max-w-[300px] w-full text-center ${cssStyles}`}
     >
@@ -26,7 +26,7 @@ const BuyBlock = ({
         <FaCartArrowDown className='ml-[10px] mb-[3px]' />
       </button>
     </div>
-  );
+  ) : null;
 };
 
 export default BuyBlock;
