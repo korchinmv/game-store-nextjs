@@ -19,6 +19,7 @@ import SliderGame from "@/components/ui/SliderGame";
 import SubTitle from "@/components/SubTitle";
 import GameCard from "@/components/GameCard";
 import Title from "@/components/Title";
+import Link from "next/link";
 
 interface GamePageProps {
   params: { slug: "string" };
@@ -78,31 +79,34 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                     labelName={dataGame?.name}
                     cssStyles='mr-[30px]'
                   />
+                  {dataGame?.metacritic && dataGame?.rating ? (
+                    <>
+                      <div className='rating border border-[--accent-color] p-[20px] w-full'>
+                        <h2 className='text-[24px] mb-[10px] text-center'>
+                          Game rating
+                        </h2>
 
-                  <div className='rating border border-[--accent-color] p-[20px] w-full'>
-                    <h2 className='text-[24px] mb-[10px] text-center'>
-                      Game rating
-                    </h2>
-
-                    <ul className='flex justify-around items-stretch'>
-                      {dataGame?.metacritic ? (
-                        <li className='flex items-center mr-[10px]'>
-                          <Rating
-                            name={"Metacritic:"}
-                            number={dataGame?.metacritic}
-                          />
-                        </li>
-                      ) : null}
-                      {dataGame?.rating ? (
-                        <li className='flex items-center'>
-                          <Rating
-                            name={"Overall rating:"}
-                            number={dataGame?.rating}
-                          />
-                        </li>
-                      ) : null}
-                    </ul>
-                  </div>
+                        <ul className='flex justify-around items-stretch'>
+                          {dataGame?.metacritic ? (
+                            <li className='flex items-center mr-[10px]'>
+                              <Rating
+                                name={"Metacritic:"}
+                                number={dataGame?.metacritic}
+                              />
+                            </li>
+                          ) : null}
+                          {dataGame?.rating ? (
+                            <li className='flex items-center'>
+                              <Rating
+                                name={"Overall rating:"}
+                                number={dataGame?.rating}
+                              />
+                            </li>
+                          ) : null}
+                        </ul>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
 
                 <TextWithMoreButton text={dataGame?.description_raw} />
@@ -116,10 +120,14 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                       <td className='bg-[--accent-color] py-[10px] px-[20px]'>
                         {dataGame?.genres.map((genre: Genre, index: number) => {
                           return (
-                            <span key={genre.id}>
+                            <Link
+                              className='underline'
+                              href={`/genres/${genre.slug}`}
+                              key={genre.id}
+                            >
                               {genre.name}
                               {index < dataGame.genres.length - 1 ? ", " : ""}
-                            </span>
+                            </Link>
                           );
                         })}
                       </td>
@@ -134,12 +142,16 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                         {dataGame?.platforms.map(
                           (obj: Platform, index: number) => {
                             return (
-                              <span key={obj.platform.id}>
+                              <Link
+                                className='underline'
+                                href={`/platform/${obj.platform.slug}`}
+                                key={obj.platform.id}
+                              >
                                 {obj.platform.name}
                                 {index < dataGame.platforms.length - 1
                                   ? ", "
                                   : ""}
-                              </span>
+                              </Link>
                             );
                           }
                         )}
@@ -168,6 +180,16 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                             );
                           }
                         )}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                        Website:
+                      </td>
+                      <td className='bg-[--accent-color] py-[10px] px-[20px]'>
+                        <a href={dataGame?.website} target='_blank'>
+                          {dataGame?.website}
+                        </a>
                       </td>
                     </tr>
                   </tbody>

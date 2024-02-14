@@ -20,13 +20,19 @@ const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
       >
         <div className='game-card__top flex justify-between p-3'>
           <div className='game-card__rating flex justify-between items-center'>
-            <span className='mr-[5px] leading-none mt-[3px]'>{rating}</span>
-            <FaStar color='yellow' size='18' />
+            {rating ? (
+              <>
+                <span className='mr-[5px] leading-none mt-[3px]'>{rating}</span>
+                <FaStar color='yellow' size='18' />
+              </>
+            ) : null}
           </div>
 
-          <button className='animation' aria-label='Add to cart'>
-            <IoCartOutline size='25' />
-          </button>
+          {price !== 0 ? (
+            <button className='animation' aria-label='Add to cart'>
+              <IoCartOutline size='25' />
+            </button>
+          ) : null}
         </div>
         <Link
           className='game-card__body block h-full outline-none grow'

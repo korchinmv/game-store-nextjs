@@ -13,20 +13,28 @@ const BuyBlock = ({
   labelName,
   cssStyles,
 }: BuyBlockProps) => {
-  return price !== 0 ? (
+  return (
     <div
-      className={`buy border border-[--accent-color] p-[20px] max-w-[300px] w-full text-center ${cssStyles}`}
+      className={`buy border border-[--accent-color] p-[20px] w-full text-center flex flex-col justify-center ${cssStyles}`}
     >
-      <span className='block text-[24px] mb-[5px]'>{`Price: ${price}$`}</span>
-      <button
-        className='text-[26px] mx-auto flex items-center font-bold uppercase hover:bg-[--accent-color] hover:text-[--white-color] transition-all duration-[0.3s] hover: bg-color-[--accent-color] py-[10px] px-[15px]'
-        aria-label={`Add to cart ${labelName} game`}
-      >
-        {buttonText}
-        <FaCartArrowDown className='ml-[10px] mb-[3px]' />
-      </button>
+      {price !== 0 ? (
+        <>
+          <span className='block text-[24px] mb-[5px]'>{`Price: ${price}$`}</span>
+          <button
+            className='text-[26px] mx-auto flex items-center font-bold uppercase hover:bg-[--accent-color] hover:text-[--white-color] transition-all duration-[0.3s] hover: bg-color-[--accent-color] py-[10px] px-[15px]'
+            aria-label={`Add to cart ${labelName} game`}
+          >
+            {buttonText}
+            <FaCartArrowDown className='ml-[10px] mb-[3px]' />
+          </button>
+        </>
+      ) : (
+        <span className='text-[24px] text-[--accent-color]'>
+          Sorry. Out of stock
+        </span>
+      )}
     </div>
-  ) : null;
+  );
 };
 
 export default BuyBlock;

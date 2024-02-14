@@ -71,6 +71,11 @@ body {
   .swiper-pagination-bullet {
     background-color: var(--accent-color);
   }
+
+  img {
+    object-fit: cover;
+    height: auto;
+  }
 }
 
 .swiper.main-swiper {
