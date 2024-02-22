@@ -3,12 +3,13 @@ import { api } from "./api.js";
 export const gamesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getGames: builder.query({
-      query: (quantity) =>
-        `games?page_size=${quantity}&key=${process.env.KEY_GAMESTORE}`,
+      query: ({ quantity, numberPage }) =>
+        `games?page_size=${quantity}&key=${process.env.KEY_GAMESTORE}&page=${
+          numberPage ? numberPage : ""
+        }`,
     }),
     getGamesByGenre: builder.query({
-      query: (args) => {
-        const { id, quantity } = args;
+      query: ({ id, quantity }) => {
         return `games?genres=${id}&page_size=${quantity}&filter=true&comments=true&key=${process.env.KEY_GAMESTORE}`;
       },
     }),

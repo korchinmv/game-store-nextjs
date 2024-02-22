@@ -11,7 +11,7 @@ const GetDataWrapper = () => {
     isLoading: isLoadingGamesQuery,
     data: dataGames,
     error: errorGames,
-  } = useGetGamesQuery(10);
+  } = useGetGamesQuery({ quantity: 10, numberPage: 1 });
 
   const {
     isLoading: isLoadingGenresQuery,
