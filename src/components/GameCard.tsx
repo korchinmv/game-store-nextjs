@@ -40,7 +40,14 @@ const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
           href={`/games/${slug}`}
         ></Link>
         <div className='game-card__bot flex justify-between items-center backdrop-blur-xl py-1 px-4 md:py-3 rounded-b-xl'>
-          <h3 className='mr-[5px]'>{name}</h3>
+          <Link
+            className='animation outline-none'
+            aria-label={`Go to game page ${slug}`}
+            href={`/games/${slug}`}
+          >
+            <h3 className='mr-[5px] w-fit'>{name}</h3>
+          </Link>
+
           <span className='text-[20px] md:text-[25px]'>
             {price === 0 ? "" : price + "$"}
           </span>

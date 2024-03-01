@@ -10,6 +10,9 @@ import { Genre } from "@/types/Genre";
 import { Platform } from "@/types/Platform";
 import { Developer } from "@/types/Developer";
 import { Game } from "@/types/Game";
+import { Typography, Link as MuiLink } from "@mui/material";
+import { trimString } from "@/utils/trimString";
+import { Breadcrumbs } from "@mui/material";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
@@ -20,7 +23,6 @@ import SubTitle from "@/components/SubTitle";
 import GameCard from "@/components/GameCard";
 import Title from "@/components/Title";
 import Link from "next/link";
-import { trimString } from "@/utils/trimString";
 
 interface GamePageProps {
   params: { slug: "string" };
@@ -36,6 +38,7 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
     isLoading: loadingScreenshots,
     data: dataScreenshots,
     error: errorScreenshots,
+    isFetching: fetchingScreenshots,
   } = useGetGameScreenshotsQuery(slug);
   const {
     isLoading: loadingGameDlc,
@@ -52,6 +55,30 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
     borderColor: "#ed5564",
   };
 
+  const breadcrumbs = [
+    <MuiLink
+      className='animation'
+      underline='none'
+      key='1'
+      color='white'
+      href='/'
+    >
+      Home
+    </MuiLink>,
+    <MuiLink
+      className='animation'
+      underline='none'
+      key='2'
+      color='white'
+      href='/games'
+    >
+      Game Store
+    </MuiLink>,
+    <Typography key='3' color='white'>
+      {dataGame?.name}
+    </Typography>,
+  ];
+
   return (
     <section>
       <Container>
@@ -59,9 +86,18 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
           <PuffLoader cssOverride={override} color={"#ed5564"} />
         ) : (
           <>
+            <Breadcrumbs
+              sx={{ marginBottom: "20px" }}
+              separator='>'
+              color='white'
+              aria-label='breadcrumbs'
+            >
+              {breadcrumbs}
+            </Breadcrumbs>
+
             <div className='flex flex-col flex-col-reverse justify-between mb-[30px] lg:flex-row'>
               <div className='screenshots max-w-full lg:max-w-[400px] lg:mr-[40px] xl:max-w-[600px] w-full shrink-0'>
-                {loadingScreenshots ? (
+                {loadingScreenshots && fetchingScreenshots ? (
                   <ClipLoader cssOverride={override} color='#ed5564' />
                 ) : (
                   <SliderGame screenshots={dataScreenshots.results} />

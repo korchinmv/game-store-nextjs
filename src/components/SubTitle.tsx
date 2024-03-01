@@ -4,7 +4,7 @@ export interface TitleProps {
 
 const SubTitle = ({ name }: TitleProps) => {
   return (
-    <h2 className="text-center mb-[10px] text-[24px] md:text-[34px] lg:text-[44px] underline underline-offset-[4px]">
+    <h2 className='text-center mb-[10px] text-[26px] md:text-[34px] lg:text-[44px] underline underline-offset-[4px]'>
       {name}
     </h2>
   );

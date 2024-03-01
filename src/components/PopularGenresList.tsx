@@ -14,7 +14,7 @@ const PopularGenresList = ({ data }: PopularGenresListProps) => {
       <>
         <SubTitle name='Popular Genres' />
         <LinkMore name={"More Genres"} link={"/genres"} />
-        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px]'>
+        <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px] w-full'>
           {data?.results.map((genre: Genre) => (
             <GenreCard
               key={genre.id}
