@@ -6,6 +6,7 @@
   --accent-color: #ed5564;
   --bg-color: #161a1e;
   --white-color: #fff;
+  --grey-color: #696969;
   --black: #000;
   --bg-dark-red: #080000;
   --bg-dark-green: #2a4545;
@@ -26,13 +27,13 @@ body {
   .animation {
     outline: transparent;
     padding: 3px;
-    border-radius: 8px;
+    border-radius: 4px;
     transition: color 0.3s, opacity 0.3s, text-decoration-color 0.3s,
       box-shadow 0.3s, transform 0.3s, background-color 0.3s;
 
     &:focus {
       box-shadow: 0 0 0 2px var(--accent-color);
-      border-radius: 8px;
+      border-radius: 4px;
     }
 
     &:active {

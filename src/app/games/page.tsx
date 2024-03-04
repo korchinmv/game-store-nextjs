@@ -9,6 +9,7 @@ import Title from "@/components/SubTitle";
 import GameCard from "@/components/GameCard";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
+import SearchInput from "@/components/ui/SearchInput";
 
 const GamesPage = () => {
   const [page, setPage] = useState(1);
@@ -35,6 +36,7 @@ const GamesPage = () => {
   return (
     <section>
       <Container>
+        {!isLoadingGamesQuery && <SearchInput />}
         <div className='flex flex-col items-center'>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
@@ -45,11 +47,13 @@ const GamesPage = () => {
             {breadcrumbs}
           </Breadcrumbs>
 
-          <Title name={"All Games"} />
+          <Title name={"Games"} />
           {isLoadingGamesQuery || fetching ? (
             <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>
+              <div className='flex'></div>
+
               <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px] py-[20px] w-full'>
                 {dataGames?.results.map((game: Game) => (
                   <GameCard
