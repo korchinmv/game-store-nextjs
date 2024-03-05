@@ -9,7 +9,7 @@ interface PaginationComponentProps {
   numPage: Number;
   setNumPage: Dispatch<SetStateAction<Number>>;
   handleGetSearchGames: LazyGetTriggerType;
-  searchGameName: string;
+  searchGameName: String;
 }
 
 const PaginationComponent = ({
