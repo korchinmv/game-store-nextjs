@@ -9,8 +9,10 @@ export const gamesApi = api.injectEndpoints({
         }`,
     }),
     getSearchGames: builder.query({
-      query: ({ gameName }) =>
-        `search?search=${gameName}&key=${process.env.KEY_GAMESTORE}`,
+      query: ({ gameName, numberPage }) =>
+        `search?page_size=20&search=${gameName}&page=1&key=${
+          process.env.KEY_GAMESTORE
+        }&page=${numberPage ? numberPage : ""}`,
     }),
     getGamesByGenre: builder.query({
       query: ({ id, quantity }) => {

@@ -10,13 +10,17 @@ interface GameCardProps {
   id: number;
   slug: string;
 }
+const noPicImagePath =
+  "https://i.pinimg.com/originals/7e/1d/3b/7e1d3b6b9b0a1e48ff975850597cc70e.jpg";
 
 const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
   return (
     <li>
       <article
         className='game-card bg-no-repeat bg-cover bg-top md:bg-center min-h-[170px] md:min-h-[300px] flex flex-col justify-between border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[--accent-color]'
-        style={{ backgroundImage: `url(${bgImage})` }}
+        style={{
+          backgroundImage: `url(${bgImage ? bgImage : noPicImagePath})`,
+        }}
       >
         <div className='game-card__top flex justify-between p-3'>
           <div className='game-card__rating flex justify-between items-center'>
@@ -28,11 +32,11 @@ const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
             ) : null}
           </div>
 
-          {price !== 0 ? (
+          {price === 0 || price === undefined ? null : (
             <button className='animation' aria-label='Add to cart'>
               <IoCartOutline size='25' />
             </button>
-          ) : null}
+          )}
         </div>
         <Link
           className='game-card__body block h-full outline-none grow'
@@ -49,7 +53,7 @@ const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
           </Link>
 
           <span className='text-[20px] md:text-[25px]'>
-            {price === 0 ? "" : price + "$"}
+            {price === 0 || price === undefined ? "" : price + "$"}
           </span>
         </div>
       </article>

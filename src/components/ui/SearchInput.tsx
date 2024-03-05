@@ -1,9 +1,18 @@
 "use client";
-import { useLazyGetSearchGamesQuery } from "@/redux/api/games.api";
-import { CiSearch } from "react-icons/ci";
-import { useState } from "react";
 
-const SearchInput = () => {
+import { CiSearch } from "react-icons/ci";
+import { Dispatch, SetStateAction, useState } from "react";
+import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
+
+const SearchInput = ({
+  trigger,
+  setNumPage,
+  setSearchGameName,
+}: {
+  trigger: LazyGetTriggerType;
+  setNumPage: Dispatch<SetStateAction<Number>>;
+  setSearchGameName: Dispatch<SetStateAction<String>>;
+}) => {
   const [value, setValue] = useState("");
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -12,13 +21,11 @@ const SearchInput = () => {
     setValue(event.target.value);
   };
 
-  const [trigger, { data, isLoading, error }] = useLazyGetSearchGamesQuery();
-  console.log(data);
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    trigger({ gameName: value });
-    console.log(value);
+    trigger({ gameName: value, numberPage: 1 });
+    setNumPage(1);
+    setSearchGameName(value);
   };
 
   return (
