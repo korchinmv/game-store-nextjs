@@ -1,5 +1,5 @@
-import "@/styles/globals.css";
 import { Roboto_Condensed } from "next/font/google";
+import "@/styles/globals.css";
 import StoreProvider from "@/app/StoreProvider";
 import MobileMenu from "@/components/ui/MobileMenu";
 import Header from "@/components/Header";

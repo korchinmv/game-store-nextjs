@@ -1,4 +1,4 @@
-import { Children } from "@/types";
+import { Children } from "@/types/Children";
 
 const Main = ({ children }: Children) => {
   return <main>{children}</main>;
