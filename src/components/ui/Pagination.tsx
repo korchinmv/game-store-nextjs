@@ -6,11 +6,11 @@ import { ResponseSearchGames } from "@/types/ResponseSearchGames";
 import Theme from "@/styles/muiStyles";
 
 interface PaginationComponentProps {
-  pageQty: Number | undefined;
-  numPage: Number;
+  pageQty: number;
+  numPage: number;
   setNumPage: Dispatch<SetStateAction<Number>>;
   handleGetSearchGames: LazyGetTriggerType;
-  searchGameName: String;
+  searchGameName: string;
   dataGameSearch: ResponseSearchGames;
 }
 
@@ -22,8 +22,6 @@ const PaginationComponent = ({
   dataGameSearch,
   searchGameName,
 }: PaginationComponentProps) => {
-  console.log(dataGameSearch);
-
   return (
     <Theme>
       <Pagination
