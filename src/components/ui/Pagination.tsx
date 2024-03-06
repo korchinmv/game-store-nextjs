@@ -8,7 +8,7 @@ import Theme from "@/styles/muiStyles";
 interface PaginationComponentProps {
   pageQty: number;
   numPage: number;
-  setNumPage: Dispatch<SetStateAction<Number>>;
+  setNumPage: Dispatch<SetStateAction<number>>;
   handleGetSearchGames: LazyGetTriggerType;
   searchGameName: string;
   dataGameSearch: ResponseSearchGames;

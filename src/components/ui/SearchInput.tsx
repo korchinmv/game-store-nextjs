@@ -10,8 +10,8 @@ const SearchInput = ({
   setSearchGameName,
 }: {
   trigger: LazyGetTriggerType;
-  setNumPage: Dispatch<SetStateAction<Number>>;
-  setSearchGameName: Dispatch<SetStateAction<String>>;
+  setNumPage: Dispatch<SetStateAction<number>>;
+  setSearchGameName: Dispatch<SetStateAction<string>>;
 }) => {
   const [value, setValue] = useState("");
 

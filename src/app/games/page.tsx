@@ -16,9 +16,9 @@ import PaginationComponent from "@/components/ui/Pagination";
 
 const GamesPage = () => {
   const [games, setGames] = useState<Game[]>([]);
-  const [numPage, setNumPage] = useState<Number>(1);
-  const [pageQty, setPageQty] = useState<Number | null>(null);
-  const [searchGameName, setSearchGameName] = useState<String>("");
+  const [numPage, setNumPage] = useState<number>(1);
+  const [pageQty, setPageQty] = useState<number>(0);
+  const [searchGameName, setSearchGameName] = useState<string>("");
 
   const {
     isLoading: isLoadingGamesQuery,
