@@ -2,6 +2,7 @@
 import { Pagination } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
+import { ResponseSearchGames } from "@/types/ResponseSearchGames";
 import Theme from "@/styles/muiStyles";
 
 interface PaginationComponentProps {
@@ -10,6 +11,7 @@ interface PaginationComponentProps {
   setNumPage: Dispatch<SetStateAction<Number>>;
   handleGetSearchGames: LazyGetTriggerType;
   searchGameName: String;
+  dataGameSearch: ResponseSearchGames;
 }
 
 const PaginationComponent = ({
@@ -20,6 +22,8 @@ const PaginationComponent = ({
   dataGameSearch,
   searchGameName,
 }: PaginationComponentProps) => {
+  console.log(dataGameSearch);
+
   return (
     <Theme>
       <Pagination
@@ -40,8 +44,6 @@ const PaginationComponent = ({
         }}
         onChange={(_, num) => {
           if (dataGameSearch) {
-            console.log("searchGameName");
-
             handleGetSearchGames({ gameName: searchGameName, numberPage: num });
             setNumPage(num);
             return;
