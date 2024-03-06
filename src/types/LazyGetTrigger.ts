@@ -8,9 +8,14 @@ import {
 } from "@reduxjs/toolkit/query";
 import { ResponseGamesData } from "./ResponseGamesData";
 
+export type RequestGameData = {
+  gameName: string;
+  numberPage: number;
+};
+
 export type LazyGetTriggerType = LazyQueryTrigger<
   QueryDefinition<
-    ResponseGamesData,
+    RequestGameData,
     BaseQueryFn<
       string | FetchArgs,
       unknown,

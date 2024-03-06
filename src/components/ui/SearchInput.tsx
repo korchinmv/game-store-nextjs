@@ -1,5 +1,4 @@
 "use client";
-
 import { CiSearch } from "react-icons/ci";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
