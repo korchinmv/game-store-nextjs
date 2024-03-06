@@ -6,7 +6,7 @@ import { ResponseSearchGames } from "@/types/ResponseSearchGames";
 import Theme from "@/styles/muiStyles";
 
 interface PaginationComponentProps {
-  pageQty: Number | null;
+  pageQty: Number | undefined;
   numPage: Number;
   setNumPage: Dispatch<SetStateAction<Number>>;
   handleGetSearchGames: LazyGetTriggerType;
