@@ -2,9 +2,11 @@
 import { useGetGamesQuery } from "@/redux/api/games.api";
 import { useGetGenresQuery } from "@/redux/api/genres.api";
 import { PacmanLoader } from "react-spinners";
-import BestGamesList from "./BestGamesList";
-import PopularGenresList from "./PopularGenresList";
+import GamesList from "./GamesList";
+import GenresList from "./GenresList";
 import ErrorData from "./ErrorData";
+import SubTitle from "./SubTitle";
+import LinkMore from "./ui/LinkMore";
 
 const GetDataWrapper = () => {
   const {
@@ -27,8 +29,21 @@ const GetDataWrapper = () => {
         <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
       ) : (
         <>
-          <BestGamesList data={dataGames} />
-          <PopularGenresList data={dataGenres} />
+          <section className='flex flex-col py-[15px] md:mb-[30px]'>
+            <>
+              <SubTitle name='The best Games for you' />
+              <LinkMore name={"More Games"} link={"/games"} />
+              <GamesList games={dataGames?.results} />
+            </>
+          </section>
+
+          <section className='flex flex-col py-[30px] md:mb-[30px]'>
+            <>
+              <SubTitle name='Popular Genres' />
+              <LinkMore name={"More Genres"} link={"/genres"} />
+              <GenresList data={dataGenres} />
+            </>
+          </section>
         </>
       )}
     </>

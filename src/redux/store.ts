@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import toggleMenuSlice from "./features/mobileMenu/toggleMenuSlice";
 import { api } from "./api/api";
+import toggleMenuSlice from "./features/mobileMenu/toggleMenuSlice";
 
 export const store = () => {
   return configureStore({

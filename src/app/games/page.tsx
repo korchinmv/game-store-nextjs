@@ -7,21 +7,24 @@ import { Game } from "@/types/Game";
 import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
+import { getLocalStorage } from "@/utils/getLocalStorage";
 import Title from "@/components/SubTitle";
-import GameCard from "@/components/GameCard";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
+import GamesList from "@/components/GamesList";
 
 const GamesPage = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [numPage, setNumPage] = useState<number>(1);
-  const [pageQty, setPageQty] = useState<number>(0);
+  const [allGames, setAllGames] = useState<Game[]>([]);
   const [searchGameName, setSearchGameName] = useState<string>("");
+  const [inputSearchForm, setInputSearchForm] = useState<string>("");
+  const [numPage, setNumPage] = useState<number>(1);
+  const [searchNumPage, setSearchNumPage] = useState<number>(1);
+  const [pageQty, setPageQty] = useState<number>(0);
 
   const {
-    isLoading: isLoadingGamesQuery,
+    isLoading: loadingGamesQuery,
     data: dataGames,
     error: errorGames,
     isFetching: fetchingGetGames,
@@ -38,17 +41,31 @@ const GamesPage = () => {
   ] = useLazyGetSearchGamesQuery();
 
   useEffect(() => {
-    setGames(dataGames?.results);
+    const localInputSearch = getLocalStorage("searchInputValue");
+    const localSearchPageNumber = getLocalStorage("searchPageNumber");
+    const localPageNumber = getLocalStorage("pageNumber");
+
+    if (localInputSearch) {
+      setInputSearchForm(JSON.parse(localInputSearch));
+    }
+
+    if (localSearchPageNumber) {
+      setSearchNumPage(JSON.parse(localSearchPageNumber));
+    }
+
+    if (localPageNumber) {
+      setNumPage(JSON.parse(localPageNumber));
+    }
+
+    setAllGames(dataGames?.results);
     setPageQty(dataGames?.count);
+    localStorage.setItem("games", JSON.stringify(dataGames?.results));
   }, [dataGames]);
 
   useEffect(() => {
-    setGames(dataGameSearch?.results);
+    setAllGames(dataGameSearch?.results);
     setPageQty(dataGameSearch?.count);
   }, [dataGameSearch]);
-
-  if (errorGames || errorGameSearch)
-    return <ErrorData errorText='Error data games. Bad request.' />;
 
   const breadcrumbs = [
     <Link className='animation' underline='none' key='1' color='white' href='/'>
@@ -59,17 +76,10 @@ const GamesPage = () => {
     </Typography>,
   ];
 
-  return (
-    <section>
-      <Container>
-        {!isLoadingGamesQuery && (
-          <SearchInput
-            trigger={trigger}
-            setNumPage={setNumPage}
-            setSearchGameName={setSearchGameName}
-          />
-        )}
-        <div className='flex flex-col items-center'>
+  if (dataGames?.results.length === 0 || dataGameSearch?.results.length === 0) {
+    return (
+      <section>
+        <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
             separator='>'
@@ -79,35 +89,89 @@ const GamesPage = () => {
             {breadcrumbs}
           </Breadcrumbs>
 
+          <SearchInput
+            trigger={trigger}
+            setSearchGameName={setSearchGameName}
+            inputSearchForm={inputSearchForm}
+            setInputSearchForm={setInputSearchForm}
+            setSearchNumPage={setSearchNumPage}
+          />
+          <ErrorData errorText='Games Not Found ;-(' />
+        </Container>
+      </section>
+    );
+  }
+
+  if (errorGames || errorGameSearch)
+    return (
+      <section>
+        <Container>
+          <Breadcrumbs
+            sx={{ marginBottom: "10px", alignSelf: "start" }}
+            separator='>'
+            color='white'
+            aria-label='breadcrumbs'
+          >
+            {breadcrumbs}
+          </Breadcrumbs>
+          <SearchInput
+            trigger={trigger}
+            setSearchGameName={setSearchGameName}
+            setSearchNumPage={setSearchNumPage}
+            inputSearchForm={inputSearchForm}
+            setInputSearchForm={setInputSearchForm}
+          />
+          <ErrorData errorText='Error data games. Bad request.' />
+        </Container>
+      </section>
+    );
+
+  return (
+    <section>
+      <Container>
+        <Breadcrumbs
+          sx={{ marginBottom: "10px", alignSelf: "start" }}
+          separator='>'
+          color='white'
+          aria-label='breadcrumbs'
+        >
+          {breadcrumbs}
+        </Breadcrumbs>
+
+        {!loadingGamesQuery && (
+          <SearchInput
+            trigger={trigger}
+            setSearchNumPage={setSearchNumPage}
+            setSearchGameName={setSearchGameName}
+            inputSearchForm={inputSearchForm}
+            setInputSearchForm={setInputSearchForm}
+          />
+        )}
+
+        <div className='flex flex-col items-center'>
           <Title name={"Games"} />
-          {isLoadingGamesQuery ||
+
+          {loadingGamesQuery ||
           fetchingGetGames ||
           loadingGameSearch ||
           fetchingGameSearch ? (
             <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>
-              <div className='flex'></div>
+              {/* <GamesList
+                games={
+                  getLocalStorage("searchGames") === null ||
+                  (getLocalStorage("games") === null && allGames)
+                }
+              /> */}
 
-              <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-[25px] py-[20px] w-full'>
-                {games?.map((game: Game) => (
-                  <GameCard
-                    key={game.id}
-                    id={game.id}
-                    name={game.name}
-                    price={game.playtime}
-                    rating={game.rating}
-                    bgImage={game.background_image}
-                    slug={game.slug}
-                  />
-                ))}
-              </ul>
-
-              {!!dataGames || !!dataGameSearch ? (
+              {allGames?.length !== 0 ? (
                 <PaginationComponent
                   pageQty={pageQty}
                   setNumPage={setNumPage}
                   numPage={numPage}
+                  searchNumPage={searchNumPage}
+                  setSearchNumPage={setSearchNumPage}
                   handleGetSearchGames={trigger}
                   dataGameSearch={dataGameSearch}
                   searchGameName={searchGameName}

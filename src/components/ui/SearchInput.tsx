@@ -5,26 +5,40 @@ import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
 
 const SearchInput = ({
   trigger,
-  setNumPage,
   setSearchGameName,
+  inputSearchForm,
+  setInputSearchForm,
+  setSearchNumPage,
 }: {
   trigger: LazyGetTriggerType;
-  setNumPage: Dispatch<SetStateAction<number>>;
   setSearchGameName: Dispatch<SetStateAction<string>>;
+  inputSearchForm: string;
+  setInputSearchForm: Dispatch<SetStateAction<string>>;
+  setSearchNumPage: Dispatch<SetStateAction<number>>;
 }) => {
-  const [value, setValue] = useState("");
+  const [inputError, setInputError] = useState<boolean>(false);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    setValue(event.target.value);
+    setInputSearchForm(event.target.value);
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    trigger({ gameName: value, numberPage: 1 });
-    setNumPage(1);
-    setSearchGameName(value);
+
+    if (!inputSearchForm) {
+      return setInputError(true);
+    }
+
+    if (inputSearchForm) {
+      trigger({ gameName: inputSearchForm, numberPage: 1 });
+      setSearchNumPage(1);
+      setSearchGameName(inputSearchForm);
+      setInputError(false);
+    }
+
+    localStorage.setItem("searchInputValue", JSON.stringify(inputSearchForm));
   };
 
   return (
@@ -36,9 +50,17 @@ const SearchInput = ({
       <input
         className='w-full py-[7px] pl-[15px] pr-[100px] bg-transparent text-[--white-color] outline-none border-[1px] border-[--grey-color] rounded-[4px] transition-all hover:border-[--accent-color] focus:border-[--accent-color]'
         placeholder='Search games...'
-        value={value}
+        value={inputSearchForm}
         onChange={handleInputChange}
+        maxLength={30}
       />
+
+      {inputError ? (
+        <span className='text-[--accent-color] text-[14px] absolute left-0 bottom-[-25px]'>
+          Write the name of the Game
+        </span>
+      ) : null}
+
       <button
         className='p-[10px] flex items-center justify-center content-center bg-[--accent-color] w-[70px] rounded-r-[3px] h-full absolute right-0 top-0'
         aria-label='Button game search'

@@ -33,7 +33,7 @@ const Header: FC = () => {
                 }
                 href='/games'
               >
-                Game store
+                Game Store
               </Link>
             </li>
             <li className='mx-3'>

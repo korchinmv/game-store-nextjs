@@ -12,6 +12,8 @@ interface PaginationComponentProps {
   handleGetSearchGames: LazyGetTriggerType;
   searchGameName: string;
   dataGameSearch: ResponseSearchGames;
+  searchNumPage: number;
+  setSearchNumPage: Dispatch<SetStateAction<number>>;
 }
 
 const PaginationComponent = ({
@@ -21,12 +23,14 @@ const PaginationComponent = ({
   handleGetSearchGames,
   dataGameSearch,
   searchGameName,
+  searchNumPage,
+  setSearchNumPage,
 }: PaginationComponentProps) => {
   return (
     <Theme>
       <Pagination
         count={pageQty}
-        page={numPage}
+        page={searchNumPage > 1 ? searchNumPage : numPage}
         variant='outlined'
         shape='rounded'
         size='large'
@@ -42,11 +46,15 @@ const PaginationComponent = ({
         }}
         onChange={(_, num) => {
           if (dataGameSearch) {
+            console.log(dataGameSearch);
+
             handleGetSearchGames({ gameName: searchGameName, numberPage: num });
-            setNumPage(num);
+            setSearchNumPage(num);
+            localStorage.setItem("searchPageNumber", JSON.stringify(num));
             return;
           }
 
+          localStorage.setItem("pageNumber", JSON.stringify(num));
           setNumPage(num);
           return;
         }}
