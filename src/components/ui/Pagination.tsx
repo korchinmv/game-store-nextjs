@@ -2,16 +2,15 @@
 import { Pagination } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
-import { ResponseSearchGames } from "@/types/ResponseSearchGames";
 import Theme from "@/styles/muiStyles";
+import { getSessionStorage } from "@/utils/getSessionStorage";
 
 interface PaginationComponentProps {
   pageQty: number;
   numPage: number;
-  setNumPage?: Dispatch<SetStateAction<number>>;
+  setNumPage: Dispatch<SetStateAction<number>>;
   handleGetSearchGames: LazyGetTriggerType;
   searchGameName: string;
-  dataGameSearch: ResponseSearchGames;
   searchNumPage: number;
   setSearchNumPage: Dispatch<SetStateAction<number>>;
 }
@@ -21,19 +20,23 @@ const PaginationComponent = ({
   numPage,
   setNumPage,
   handleGetSearchGames,
-  dataGameSearch,
   searchGameName,
   searchNumPage,
   setSearchNumPage,
 }: PaginationComponentProps) => {
+  const storageInputSearch = getSessionStorage("searchInputValue");
+  const isSearchGamesPage =
+    window.location.pathname === `/games/search/${storageInputSearch}`;
+  console.log(isSearchGamesPage);
+
   return (
     <Theme>
       <Pagination
         count={pageQty}
         page={searchNumPage ? searchNumPage : numPage}
-        variant='outlined'
-        shape='rounded'
-        size='large'
+        variant="outlined"
+        shape="rounded"
+        size="large"
         defaultPage={1}
         sx={{
           ".Mui-selected": {
@@ -45,7 +48,7 @@ const PaginationComponent = ({
           },
         }}
         onChange={(_, num) => {
-          if (dataGameSearch) {
+          if (isSearchGamesPage) {
             handleGetSearchGames({ gameName: searchGameName, numberPage: num });
             setSearchNumPage(num);
             sessionStorage.setItem("searchPageNumber", JSON.stringify(num));

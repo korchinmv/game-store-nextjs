@@ -5,7 +5,6 @@ import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { PacmanLoader } from "react-spinners";
 import { getSessionStorage } from "@/utils/getSessionStorage";
 import { Game } from "@/types/Game";
-import { getURL } from "next/dist/shared/lib/utils";
 import Container from "@/components/Container";
 import GamesList from "@/components/GamesList";
 import Title from "@/components/Title";
@@ -18,7 +17,7 @@ const SearchPage = () => {
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
   const [searchNumPage, setSearchNumPage] = useState<number>(1);
   const [searchGameName, setSearchGameName] = useState<string>("");
-  const location = getURL().slice(14);
+  const [pageQty, setPageQty] = useState<number>(0);
 
   const [
     trigger,
@@ -29,15 +28,6 @@ const SearchPage = () => {
       isFetching: fetchingGameSearch,
     },
   ] = useLazyGetSearchGamesQuery();
-
-  // useEffect(() => {
-  //   trigger({ gameName: location, numberPage: 1 });
-
-  //   sessionStorage.setItem(
-  //     "searchGamesList",
-  //     JSON.stringify(dataGames?.results)
-  //   );
-  // }, []);
 
   useEffect(() => {
     const storageSearchGameList = getSessionStorage("searchGamesList");
@@ -54,23 +44,33 @@ const SearchPage = () => {
 
     if (storageSearchGameList) {
       setAllGames(storageSearchGameList);
+      setPageQty(storageSearchGameList.count);
     }
 
-    // if (dataGames?.results) {
-    //   setAllGames(dataGames?.results);
-    //   setPageQty(dataGames?.count);
-    //   sessionStorage.setItem("gamesList", JSON.stringify(dataGames?.results));
-    // }
-  }, []);
+    if (dataGames?.results) {
+      setAllGames(dataGames?.results);
+      setPageQty(dataGames?.count);
+      sessionStorage.setItem(
+        "searchGamesList",
+        JSON.stringify(dataGames?.results)
+      );
+    }
+  }, [dataGames]);
 
   const breadcrumbs = [
-    <Link className='animation' underline='none' key='1' color='white' href='/'>
+    <Link className="animation" underline="none" key="1" color="white" href="/">
       Home
     </Link>,
-    <Link className='animation' underline='none' key='2' color='white' href='/'>
+    <Link
+      className="animation"
+      underline="none"
+      key="2"
+      color="white"
+      href="/games"
+    >
       Game Store
     </Link>,
-    <Typography key='3' color='white'>
+    <Typography key="3" color="white">
       Found Games
     </Typography>,
   ];
@@ -81,21 +81,20 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
 
           <SearchInput
-            trigger={trigger}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
             setSearchNumPage={setSearchNumPage}
           />
-          <ErrorData errorText='Games Not Found ;-(' />
+          <ErrorData errorText="Games Not Found ;-(" />
         </Container>
       </section>
     );
@@ -107,20 +106,19 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
           <SearchInput
-            trigger={trigger}
             setSearchGameName={setSearchGameName}
             setSearchNumPage={setSearchNumPage}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
           />
-          <ErrorData errorText='Error data games. Bad request.' />
+          <ErrorData errorText="Error data games. Bad request." />
         </Container>
       </section>
     );
@@ -130,16 +128,16 @@ const SearchPage = () => {
       <Container>
         <Breadcrumbs
           sx={{ marginBottom: "10px", alignSelf: "start" }}
-          separator='>'
-          color='white'
-          aria-label='breadcrumbs'
+          separator=">"
+          color="white"
+          aria-label="breadcrumbs"
         >
           {breadcrumbs}
         </Breadcrumbs>
 
         {!loadingGamesQuery && (
           <SearchInput
-            trigger={trigger}
+            // trigger={trigger}
             setSearchNumPage={setSearchNumPage}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
@@ -147,23 +145,24 @@ const SearchPage = () => {
           />
         )}
 
-        <div className='flex flex-col items-center'>
+        <div className="flex flex-col items-center">
           <Title name={"Found Games"} />
 
-          {loadingGamesQuery ? (
-            <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
+          {loadingGamesQuery || fetchingGameSearch ? (
+            <PacmanLoader className="mx-auto my-0 mt-[100px]" color="#ed5564" />
           ) : (
             <>
               <GamesList games={allGames} />
 
-              {/* {allGames?.length !== 0 ? (
+              {allGames?.length !== 0 ? (
                 <PaginationComponent
                   pageQty={pageQty}
-                  handleGetSearchGames={trigger}
-                  dataGameSearch={dataGameSearch}
+                  searchNumPage={searchNumPage}
+                  setSearchNumPage={setSearchNumPage}
                   searchGameName={searchGameName}
+                  handleGetSearchGames={trigger}
                 />
-              ) : null} */}
+              ) : null}
             </>
           )}
         </div>
