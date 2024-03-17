@@ -8,7 +8,7 @@ import Theme from "@/styles/muiStyles";
 interface PaginationComponentProps {
   pageQty: number;
   numPage: number;
-  setNumPage: Dispatch<SetStateAction<number>>;
+  setNumPage?: Dispatch<SetStateAction<number>>;
   handleGetSearchGames: LazyGetTriggerType;
   searchGameName: string;
   dataGameSearch: ResponseSearchGames;
@@ -30,7 +30,7 @@ const PaginationComponent = ({
     <Theme>
       <Pagination
         count={pageQty}
-        page={searchNumPage > 1 ? searchNumPage : numPage}
+        page={searchNumPage ? searchNumPage : numPage}
         variant='outlined'
         shape='rounded'
         size='large'
@@ -46,15 +46,13 @@ const PaginationComponent = ({
         }}
         onChange={(_, num) => {
           if (dataGameSearch) {
-            console.log(dataGameSearch);
-
             handleGetSearchGames({ gameName: searchGameName, numberPage: num });
             setSearchNumPage(num);
-            localStorage.setItem("searchPageNumber", JSON.stringify(num));
+            sessionStorage.setItem("searchPageNumber", JSON.stringify(num));
             return;
           }
 
-          localStorage.setItem("pageNumber", JSON.stringify(num));
+          sessionStorage.setItem("pageNumber", JSON.stringify(num));
           setNumPage(num);
           return;
         }}

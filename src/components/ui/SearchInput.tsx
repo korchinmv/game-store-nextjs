@@ -2,21 +2,23 @@
 import { CiSearch } from "react-icons/ci";
 import { Dispatch, SetStateAction, useState } from "react";
 import { LazyGetTriggerType } from "@/types/LazyGetTrigger";
+import { useRouter } from "next/navigation";
 
 const SearchInput = ({
-  trigger,
   setSearchGameName,
   inputSearchForm,
   setInputSearchForm,
   setSearchNumPage,
+  trigger,
 }: {
-  trigger: LazyGetTriggerType;
   setSearchGameName: Dispatch<SetStateAction<string>>;
   inputSearchForm: string;
   setInputSearchForm: Dispatch<SetStateAction<string>>;
   setSearchNumPage: Dispatch<SetStateAction<number>>;
+  trigger: LazyGetTriggerType;
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -28,17 +30,23 @@ const SearchInput = ({
     e.preventDefault();
 
     if (!inputSearchForm) {
+      sessionStorage.setItem(
+        "searchInputValue",
+        JSON.stringify(inputSearchForm)
+      );
       return setInputError(true);
     }
 
     if (inputSearchForm) {
       trigger({ gameName: inputSearchForm, numberPage: 1 });
-      setSearchNumPage(1);
       setSearchGameName(inputSearchForm);
       setInputError(false);
+      setSearchNumPage(1);
+      sessionStorage.setItem("searchPageNumber", JSON.stringify(1));
     }
 
-    localStorage.setItem("searchInputValue", JSON.stringify(inputSearchForm));
+    sessionStorage.setItem("searchInputValue", JSON.stringify(inputSearchForm));
+    router.push(`/games/search/${inputSearchForm}`);
   };
 
   return (

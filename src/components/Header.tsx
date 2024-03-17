@@ -31,6 +31,7 @@ const Header: FC = () => {
                 className={
                   pathname === "/games" ? "animation text-red-400" : "animation"
                 }
+                id='store'
                 href='/games'
               >
                 Game Store

@@ -1,76 +1,79 @@
 "use client";
-import { useGetGamesQuery } from "@/redux/api/games.api";
-import { Game } from "@/types/Game";
-import { PacmanLoader } from "react-spinners";
-import { Breadcrumbs, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useLazyGetSearchGamesQuery } from "@/redux/api/games.api";
+import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { PacmanLoader } from "react-spinners";
 import { getSessionStorage } from "@/utils/getSessionStorage";
-import Title from "@/components/SubTitle";
+import { Game } from "@/types/Game";
+import { getURL } from "next/dist/shared/lib/utils";
 import Container from "@/components/Container";
-import ErrorData from "@/components/ErrorData";
-import SearchInput from "@/components/ui/SearchInput";
-import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
+import Title from "@/components/Title";
+import PaginationComponent from "@/components/ui/Pagination";
+import SearchInput from "@/components/ui/SearchInput";
+import ErrorData from "@/components/ErrorData";
 
-const GamesPage = () => {
+const SearchPage = () => {
   const [allGames, setAllGames] = useState<Game[]>([]);
-  const [searchGameName, setSearchGameName] = useState<string>("");
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
-  const [numPage, setNumPage] = useState<number>(1);
-  const [searchNumPage, setSearchNumPage] = useState<number>(0);
-  const [pageQty, setPageQty] = useState<number>(0);
-  const storeHeaderLink = document.querySelector("#store");
-  const isGamesPage = window.location.pathname === "/games";
+  const [searchNumPage, setSearchNumPage] = useState<number>(1);
+  const [searchGameName, setSearchGameName] = useState<string>("");
+  const location = getURL().slice(14);
 
-  const {
-    isLoading: loadingGamesQuery,
-    data: dataGames,
-    error: errorGames,
-    isFetching: fetchingGetGames,
-  } = useGetGamesQuery({ quantity: 20, numberPage: numPage });
+  const [
+    trigger,
+    {
+      data: dataGames,
+      isLoading: loadingGamesQuery,
+      error: errorGames,
+      isFetching: fetchingGameSearch,
+    },
+  ] = useLazyGetSearchGamesQuery();
+
+  // useEffect(() => {
+  //   trigger({ gameName: location, numberPage: 1 });
+
+  //   sessionStorage.setItem(
+  //     "searchGamesList",
+  //     JSON.stringify(dataGames?.results)
+  //   );
+  // }, []);
 
   useEffect(() => {
+    const storageSearchGameList = getSessionStorage("searchGamesList");
+    const storageSearchPageNumber = getSessionStorage("searchPageNumber");
     const storageInputSearch = getSessionStorage("searchInputValue");
-    const storagePageNumber = getSessionStorage("pageNumber");
-    const storageGameList = getSessionStorage("gamesList");
 
     if (storageInputSearch) {
       setInputSearchForm(storageInputSearch);
     }
 
-    if (storagePageNumber) {
-      setNumPage(storagePageNumber);
+    if (storageSearchPageNumber) {
+      setSearchNumPage(storageSearchPageNumber);
     }
 
-    if (storageGameList) {
-      setAllGames(storageGameList);
+    if (storageSearchGameList) {
+      setAllGames(storageSearchGameList);
     }
 
-    if (dataGames?.results) {
-      setAllGames(dataGames?.results);
-      setPageQty(dataGames?.count);
-      sessionStorage.setItem("gamesList", JSON.stringify(dataGames?.results));
-    }
-  }, [dataGames]);
+    // if (dataGames?.results) {
+    //   setAllGames(dataGames?.results);
+    //   setPageQty(dataGames?.count);
+    //   sessionStorage.setItem("gamesList", JSON.stringify(dataGames?.results));
+    // }
+  }, []);
 
   const breadcrumbs = [
     <Link className='animation' underline='none' key='1' color='white' href='/'>
       Home
     </Link>,
-    <Typography key='2' color='white'>
+    <Link className='animation' underline='none' key='2' color='white' href='/'>
       Game Store
+    </Link>,
+    <Typography key='3' color='white'>
+      Found Games
     </Typography>,
   ];
-
-  const updateGamesList = () => {
-    setAllGames(getSessionStorage("gamesList"));
-  };
-
-  storeHeaderLink?.addEventListener("click", updateGamesList);
-
-  if (!isGamesPage) {
-    storeHeaderLink?.removeEventListener("click", updateGamesList);
-  }
 
   if (dataGames?.results.length === 0) {
     return (
@@ -86,6 +89,7 @@ const GamesPage = () => {
           </Breadcrumbs>
 
           <SearchInput
+            trigger={trigger}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
@@ -110,6 +114,7 @@ const GamesPage = () => {
             {breadcrumbs}
           </Breadcrumbs>
           <SearchInput
+            trigger={trigger}
             setSearchGameName={setSearchGameName}
             setSearchNumPage={setSearchNumPage}
             inputSearchForm={inputSearchForm}
@@ -134,6 +139,7 @@ const GamesPage = () => {
 
         {!loadingGamesQuery && (
           <SearchInput
+            trigger={trigger}
             setSearchNumPage={setSearchNumPage}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
@@ -142,24 +148,22 @@ const GamesPage = () => {
         )}
 
         <div className='flex flex-col items-center'>
-          <Title name={"Games"} />
+          <Title name={"Found Games"} />
 
-          {loadingGamesQuery || fetchingGetGames ? (
+          {loadingGamesQuery ? (
             <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>
               <GamesList games={allGames} />
 
-              {allGames?.length !== 0 ? (
+              {/* {allGames?.length !== 0 ? (
                 <PaginationComponent
                   pageQty={pageQty}
-                  setNumPage={setNumPage}
-                  numPage={numPage}
-                  searchNumPage={searchNumPage}
-                  setSearchNumPage={setSearchNumPage}
+                  handleGetSearchGames={trigger}
+                  dataGameSearch={dataGameSearch}
                   searchGameName={searchGameName}
                 />
-              ) : null}
+              ) : null} */}
             </>
           )}
         </div>
@@ -168,4 +172,4 @@ const GamesPage = () => {
   );
 };
 
-export default GamesPage;
+export default SearchPage;
