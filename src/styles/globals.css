@@ -54,7 +54,8 @@ body {
 .slider-game-page {
   img {
     object-fit: cover;
-    height: auto;
+    height: 115px;
+    width: 100%;
   }
 
   .swiper-slide-thumb-active {

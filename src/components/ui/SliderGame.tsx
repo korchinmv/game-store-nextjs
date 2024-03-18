@@ -4,8 +4,8 @@ import { FreeMode, Navigation, Pagination, Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useState } from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import "react-photo-view/dist/react-photo-view.css";
 import Image from "next/image";
+import "react-photo-view/dist/react-photo-view.css";
 import "swiper/swiper-bundle.css";
 
 interface Screens {
@@ -50,6 +50,7 @@ const SliderGame = ({ screenshots }: Screens) => {
       </PhotoProvider>
 
       <Swiper
+        className='slider-game-page w-full'
         onSwiper={setActiveThumb}
         spaceBetween={10}
         modules={[FreeMode, Navigation, Thumbs]}
@@ -57,18 +58,17 @@ const SliderGame = ({ screenshots }: Screens) => {
         freeMode={true}
         navigation={true}
         watchSlidesProgress={true}
-        className='slider-game-page w-full'
       >
         {screenshots.map((screenshot: Screenshot) => {
           return (
             <SwiperSlide key={screenshot.id}>
               <Image
-                className='object-cover object-center cursor-pointer w-auto'
+                className='object-cover object-center cursor-pointer w-auto h-[115px]'
                 src={screenshot.image}
                 priority
                 alt='game slide picture'
                 width='200'
-                height='100'
+                height='115'
               />
             </SwiperSlide>
           );

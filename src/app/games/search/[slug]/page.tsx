@@ -4,16 +4,16 @@ import { useLazyGetSearchGamesQuery } from "@/redux/api/games.api";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { PacmanLoader } from "react-spinners";
 import { getSessionStorage } from "@/utils/getSessionStorage";
-import { Game } from "@/types/Game";
+import { ResponseGamesData } from "@/types/ResponseGamesData";
 import Container from "@/components/Container";
 import GamesList from "@/components/GamesList";
-import Title from "@/components/Title";
 import PaginationComponent from "@/components/ui/Pagination";
 import SearchInput from "@/components/ui/SearchInput";
 import ErrorData from "@/components/ErrorData";
+import SubTitle from "@/components/SubTitle";
 
 const SearchPage = () => {
-  const [allGames, setAllGames] = useState<Game[]>([]);
+  const [allGames, setAllGames] = useState<ResponseGamesData>();
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
   const [searchNumPage, setSearchNumPage] = useState<number>(1);
   const [searchGameName, setSearchGameName] = useState<string>("");
@@ -47,30 +47,27 @@ const SearchPage = () => {
       setPageQty(storageSearchGameList.count);
     }
 
-    if (dataGames?.results) {
-      setAllGames(dataGames?.results);
+    if (dataGames) {
+      setAllGames(dataGames);
       setPageQty(dataGames?.count);
-      sessionStorage.setItem(
-        "searchGamesList",
-        JSON.stringify(dataGames?.results)
-      );
+      sessionStorage.setItem("searchGamesList", JSON.stringify(dataGames));
     }
   }, [dataGames]);
 
   const breadcrumbs = [
-    <Link className="animation" underline="none" key="1" color="white" href="/">
+    <Link className='animation' underline='none' key='1' color='white' href='/'>
       Home
     </Link>,
     <Link
-      className="animation"
-      underline="none"
-      key="2"
-      color="white"
-      href="/games"
+      className='animation'
+      underline='none'
+      key='2'
+      color='white'
+      href='/games'
     >
       Game Store
     </Link>,
-    <Typography key="3" color="white">
+    <Typography key='3' color='white'>
       Found Games
     </Typography>,
   ];
@@ -81,9 +78,9 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator=">"
-            color="white"
-            aria-label="breadcrumbs"
+            separator='>'
+            color='white'
+            aria-label='breadcrumbs'
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -94,7 +91,7 @@ const SearchPage = () => {
             setInputSearchForm={setInputSearchForm}
             setSearchNumPage={setSearchNumPage}
           />
-          <ErrorData errorText="Games Not Found ;-(" />
+          <ErrorData errorText='Games Not Found ;-(' />
         </Container>
       </section>
     );
@@ -106,9 +103,9 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator=">"
-            color="white"
-            aria-label="breadcrumbs"
+            separator='>'
+            color='white'
+            aria-label='breadcrumbs'
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -118,7 +115,7 @@ const SearchPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
           />
-          <ErrorData errorText="Error data games. Bad request." />
+          <ErrorData errorText='Error data games. Bad request.' />
         </Container>
       </section>
     );
@@ -128,16 +125,15 @@ const SearchPage = () => {
       <Container>
         <Breadcrumbs
           sx={{ marginBottom: "10px", alignSelf: "start" }}
-          separator=">"
-          color="white"
-          aria-label="breadcrumbs"
+          separator='>'
+          color='white'
+          aria-label='breadcrumbs'
         >
           {breadcrumbs}
         </Breadcrumbs>
 
         {!loadingGamesQuery && (
           <SearchInput
-            // trigger={trigger}
             setSearchNumPage={setSearchNumPage}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
@@ -145,16 +141,16 @@ const SearchPage = () => {
           />
         )}
 
-        <div className="flex flex-col items-center">
-          <Title name={"Found Games"} />
+        <div className='flex flex-col items-center'>
+          <SubTitle name={"Found Games"} />
 
           {loadingGamesQuery || fetchingGameSearch ? (
-            <PacmanLoader className="mx-auto my-0 mt-[100px]" color="#ed5564" />
+            <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>
-              <GamesList games={allGames} />
+              <GamesList dataGames={allGames} />
 
-              {allGames?.length !== 0 ? (
+              {allGames && (
                 <PaginationComponent
                   pageQty={pageQty}
                   searchNumPage={searchNumPage}
@@ -162,7 +158,7 @@ const SearchPage = () => {
                   searchGameName={searchGameName}
                   handleGetSearchGames={trigger}
                 />
-              ) : null}
+              )}
             </>
           )}
         </div>
