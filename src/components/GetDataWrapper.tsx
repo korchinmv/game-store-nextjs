@@ -26,20 +26,20 @@ const GetDataWrapper = () => {
   return (
     <>
       {isLoadingGamesQuery || isLoadingGenresQuery ? (
-        <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
+        <PacmanLoader className="mx-auto my-0 mt-[100px]" color="#ed5564" />
       ) : (
         <>
-          <section className='flex flex-col py-[15px] md:mb-[30px]'>
+          <section className="flex flex-col py-[15px] md:mb-[30px]">
             <>
-              <SubTitle name='The best Games for you' />
+              <SubTitle name="The best Games for you" />
               <LinkMore name={"More Games"} link={"/games"} />
-              <GamesList games={dataGames?.results} />
+              <GamesList dataGames={dataGames} />
             </>
           </section>
 
-          <section className='flex flex-col py-[30px] md:mb-[30px]'>
+          <section className="flex flex-col py-[30px] md:mb-[30px]">
             <>
-              <SubTitle name='Popular Genres' />
+              <SubTitle name="Popular Genres" />
               <LinkMore name={"More Genres"} link={"/genres"} />
               <GenresList data={dataGenres} />
             </>

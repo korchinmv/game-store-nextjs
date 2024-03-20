@@ -54,10 +54,10 @@ const GamesPage = () => {
   }, [dataGames]);
 
   const breadcrumbs = [
-    <Link className='animation' underline='none' key='1' color='white' href='/'>
+    <Link className="animation" underline="none" key="1" color="white" href="/">
       Home
     </Link>,
-    <Typography key='2' color='white'>
+    <Typography key="2" color="white">
       Game Store
     </Typography>,
   ];
@@ -81,9 +81,9 @@ const GamesPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -94,7 +94,7 @@ const GamesPage = () => {
             setSearchGameName={setSearchGameName}
             setSearchNumPage={setSearchNumPage}
           />
-          <ErrorData errorText='Games Not Found ;-(' />
+          <ErrorData errorText="Games Not Found ;-(" />
         </Container>
       </section>
     );
@@ -106,9 +106,9 @@ const GamesPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -118,7 +118,7 @@ const GamesPage = () => {
             setSearchGameName={setSearchGameName}
             setSearchNumPage={setSearchNumPage}
           />
-          <ErrorData errorText='Error data games. Bad request.' />
+          <ErrorData errorText="Error data games. Bad request." />
         </Container>
       </section>
     );
@@ -128,9 +128,9 @@ const GamesPage = () => {
       <Container>
         <Breadcrumbs
           sx={{ marginBottom: "10px", alignSelf: "start" }}
-          separator='>'
-          color='white'
-          aria-label='breadcrumbs'
+          separator=">"
+          color="white"
+          aria-label="breadcrumbs"
         >
           {breadcrumbs}
         </Breadcrumbs>
@@ -144,11 +144,11 @@ const GamesPage = () => {
           />
         )}
 
-        <div className='flex flex-col items-center'>
-          <Title name={"Games"} />
+        <div className="flex flex-col items-center">
+          <Title name={"All Games"} />
 
           {loadingGamesQuery || fetchingGetGames ? (
-            <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
+            <PacmanLoader className="mx-auto my-0 mt-[100px]" color="#ed5564" />
           ) : (
             <>
               <GamesList dataGames={allGames} />
