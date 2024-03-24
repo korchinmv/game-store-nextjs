@@ -1,3 +1,3 @@
 import { RootState } from "@/redux/store";
 
-export const toggleMenuSelector = (state: RootState) => state.menu;
+export const toggleMenuSelector = (state: RootState) => state.toggleMenuReducer;

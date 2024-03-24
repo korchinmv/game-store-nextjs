@@ -1,18 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./api/api";
-import toggleMenuSlice from "./features/mobileMenu/toggleMenuSlice";
-import favoritesGamesSlice from "./features/favoritesGames/favoritesGamesSlice";
+import toggleMenuReducer from "./features/mobileMenu/toggleMenuSlice";
+import favoritesGamesReducer from "./features/favoritesGames/favoritesGamesSlice";
 
 export const store = () => {
   return configureStore({
     reducer: {
-      menu: toggleMenuSlice,
-      favoritesGames: favoritesGamesSlice,
+      toggleMenuReducer,
+      favoritesGamesReducer,
       [api.reducerPath]: api.reducer,
     },
+    devTools: process.env.NODE_ENV !== "production",
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
-    devTools: true,
   });
 };
 
