@@ -1,8 +1,10 @@
 import { IoCartOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
+import { useAppDispatch } from "@/redux/hooks";
 
 import Link from "next/link";
+import { addGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
 
 interface GameCardProps {
   name: string;
@@ -15,7 +17,16 @@ interface GameCardProps {
 const noPicImagePath =
   "https://i.pinimg.com/originals/7e/1d/3b/7e1d3b6b9b0a1e48ff975850597cc70e.jpg";
 
-const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
+const GameCard = ({
+  game,
+  name,
+  price,
+  rating,
+  bgImage,
+  slug,
+}: GameCardProps) => {
+  const dispatch = useAppDispatch();
+
   return (
     <li>
       <article
@@ -35,7 +46,13 @@ const GameCard = ({ name, price, rating, bgImage, slug }: GameCardProps) => {
           </div>
 
           <div>
-            <button className="animation" aria-label="Add to favorites">
+            <button
+              className="animation"
+              aria-label="Add to favorites"
+              onClick={() => {
+                dispatch(addGame());
+              }}
+            >
               <GoHeartFill size="24" />
             </button>
             {price === 0 || price === undefined ? null : (
