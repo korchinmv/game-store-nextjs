@@ -49,19 +49,18 @@ const PaginationComponent = ({
           if (isSearchGamesPage) {
             const searchGameName = getSessionStorage("searchInputValue");
 
-            if (handleGetSearchGames)
-              handleGetSearchGames({
-                gameName: searchGameName,
-                numberPage: num,
-              });
+            handleGetSearchGames({
+              gameName: searchGameName,
+              numberPage: num,
+            });
 
-            if (setSearchNumPage) setSearchNumPage(num);
+            setSearchNumPage(num);
             sessionStorage.setItem("searchPageNumber", JSON.stringify(num));
             return;
           }
 
           sessionStorage.setItem("pageNumber", JSON.stringify(num));
-          if (setNumPage) setNumPage(num);
+          setNumPage(num);
           return;
         }}
       />
