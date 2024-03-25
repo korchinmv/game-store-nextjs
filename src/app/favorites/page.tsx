@@ -1,14 +1,14 @@
 "use client";
-import Container from "@/components/Container";
-import GamesList from "@/components/GamesList";
-import SubTitle from "@/components/SubTitle";
 import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import { useAppSelector } from "@/redux/hooks";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
+import Container from "@/components/Container";
+import ErrorData from "@/components/ErrorData";
+import GamesList from "@/components/GamesList";
+import SubTitle from "@/components/SubTitle";
 
 const FavoritesPage = () => {
   const favoritesGamesList = useAppSelector(favoritesGamesSelector);
-  console.log(favoritesGamesList);
 
   const breadcrumbs = [
     <Link className='animation' underline='none' key='1' color='white' href='/'>
@@ -33,7 +33,11 @@ const FavoritesPage = () => {
 
         <SubTitle name={"Favorites Games"} />
 
-        <GamesList dataGames={favoritesGamesList} />
+        {favoritesGamesList.results.length !== 0 ? (
+          <GamesList dataGames={favoritesGamesList} />
+        ) : (
+          <ErrorData errorText='Add Games to your favorites.' />
+        )}
       </Container>
     </section>
   );

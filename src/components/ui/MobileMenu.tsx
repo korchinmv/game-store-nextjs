@@ -2,7 +2,7 @@
 import { useAppSelector } from "@/redux/hooks";
 import { toggleMenuSelector } from "@/redux/features/mobileMenu/toggleMenuSelector";
 import CloseButton from "./CloseButton";
-import MobileMenuLink from "./mobileMenuLink";
+import MobileMenuLink from "./MobileMenuLink";
 
 const MobileMenu = () => {
   const menuState = useAppSelector(toggleMenuSelector);
