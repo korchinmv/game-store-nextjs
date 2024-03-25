@@ -8,7 +8,7 @@ interface Props {
   href: string;
 }
 
-function MobileMenuLink({ name, href }: Props) {
+const MobileMenuLink = ({ name, href }: Props) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -19,6 +19,6 @@ function MobileMenuLink({ name, href }: Props) {
       <Link href={href}>{name}</Link>
     </li>
   );
-}
+};
 
 export default MobileMenuLink;
