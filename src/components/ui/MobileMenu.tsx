@@ -19,6 +19,7 @@ const MobileMenu = () => {
         <MobileMenuLink name='Favorites' href='/favorites' />
         <MobileMenuLink name='News' href='/news' />
       </ul>
+
       <CloseButton />
     </div>
   );
