@@ -5,6 +5,7 @@ import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
+import { getStoreLinkInHeader } from "../../utils/getStoreLinkInHeader";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
@@ -19,8 +20,6 @@ const GamesPage = () => {
   const [searchNumPage, setSearchNumPage] = useState<number>(1);
   const [numPage, setNumPage] = useState<number>(1);
   const [pageQty, setPageQty] = useState<number>(0);
-  const storeHeaderLink = document.querySelector("#store");
-  const isGamesPage = window.location.pathname === "/games";
 
   const {
     isLoading: loadingGamesQuery,
@@ -28,6 +27,16 @@ const GamesPage = () => {
     error: errorGames,
     isFetching: fetchingGetGames,
   } = useGetGamesQuery({ quantity: 20, numberPage: numPage });
+
+  useEffect(() => {
+    const isGamesPage = window.location.pathname === "/games";
+
+    getStoreLinkInHeader()?.addEventListener("click", updateGamesList);
+
+    if (!isGamesPage) {
+      getStoreLinkInHeader()?.removeEventListener("click", updateGamesList);
+    }
+  }, []);
 
   useEffect(() => {
     const storageInputSearch = getSessionStorage("searchInputValue");
@@ -68,12 +77,6 @@ const GamesPage = () => {
     sessionStorage.removeItem("searchGamesList");
     sessionStorage.setItem("pageNumber", JSON.stringify(1));
   };
-
-  storeHeaderLink?.addEventListener("click", updateGamesList);
-
-  if (!isGamesPage) {
-    storeHeaderLink?.removeEventListener("click", updateGamesList);
-  }
 
   if (dataGames?.results.length === 0) {
     return (
@@ -153,14 +156,14 @@ const GamesPage = () => {
             <>
               <GamesList dataGames={allGames} />
 
-              {/* {allGames && (
+              {allGames && (
                 <PaginationComponent
                   searchGameName={searchGameName}
                   pageQty={pageQty}
                   setNumPage={setNumPage}
                   numPage={numPage}
                 />
-              )} */}
+              )}
             </>
           )}
         </div>
