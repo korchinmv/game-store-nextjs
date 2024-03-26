@@ -153,14 +153,14 @@ const GamesPage = () => {
             <>
               <GamesList dataGames={allGames} />
 
-              {allGames && (
+              {/* {allGames && (
                 <PaginationComponent
                   searchGameName={searchGameName}
                   pageQty={pageQty}
                   setNumPage={setNumPage}
                   numPage={numPage}
                 />
-              )}
+              )} */}
             </>
           )}
         </div>
