@@ -8,11 +8,11 @@ import Theme from "@/styles/muiStyles";
 interface PaginationComponentProps {
   pageQty: number;
   numPage?: number;
-  setNumPage?: Dispatch<SetStateAction<number>> | undefined;
-  handleGetSearchGames?: LazyGetTriggerType | undefined;
+  setNumPage?: Dispatch<SetStateAction<number>>;
+  handleGetSearchGames?: LazyGetTriggerType;
   searchGameName: string;
   searchNumPage?: number;
-  setSearchNumPage?: Dispatch<SetStateAction<number>> | undefined;
+  setSearchNumPage?: Dispatch<SetStateAction<number>>;
 }
 
 const PaginationComponent = ({
@@ -49,18 +49,25 @@ const PaginationComponent = ({
           if (isSearchGamesPage) {
             const searchGameName = getSessionStorage("searchInputValue");
 
-            handleGetSearchGames({
-              gameName: searchGameName,
-              numberPage: num,
-            });
-
-            setSearchNumPage(num);
-            sessionStorage.setItem("searchPageNumber", JSON.stringify(num));
-            return;
+            if (handleGetSearchGames) {
+              handleGetSearchGames({
+                gameName: searchGameName,
+                numberPage: num,
+              });
+            }
+            if (setSearchNumPage) {
+              setSearchNumPage(num);
+              sessionStorage.setItem("searchPageNumber", JSON.stringify(num));
+              return;
+            }
           }
 
           sessionStorage.setItem("pageNumber", JSON.stringify(num));
-          setNumPage(num);
+
+          if (setNumPage) {
+            setNumPage(num);
+          }
+
           return;
         }}
       />
