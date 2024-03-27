@@ -13,7 +13,7 @@ import ErrorData from "@/components/ErrorData";
 import SubTitle from "@/components/SubTitle";
 
 const SearchPage = () => {
-  const [allGames, setAllGames] = useState<ResponseGamesData>();
+  const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
   const [searchNumPage, setSearchNumPage] = useState<number>(1);
   const [searchGameName, setSearchGameName] = useState<string>("");
@@ -89,7 +89,6 @@ const SearchPage = () => {
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
-            setSearchNumPage={setSearchNumPage}
           />
           <ErrorData errorText='Games Not Found ;-(' />
         </Container>
@@ -111,7 +110,6 @@ const SearchPage = () => {
           </Breadcrumbs>
           <SearchInput
             setSearchGameName={setSearchGameName}
-            setSearchNumPage={setSearchNumPage}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
           />
@@ -134,7 +132,6 @@ const SearchPage = () => {
 
         {!loadingGamesQuery && (
           <SearchInput
-            setSearchNumPage={setSearchNumPage}
             setSearchGameName={setSearchGameName}
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
