@@ -13,13 +13,25 @@ export const favoritesGamesReducer = createSlice({
   name: "favoritesGames",
   initialState,
   reducers: {
-    addGame: (state, action: PayloadAction<Game>) => {
-      state.results.push(action.payload as Game);
+    toggleLikeGame: (state, action: PayloadAction<Game>) => {
+      if (state.results.length === 0) {
+        state.results.push(action.payload as Game);
+        return;
+      }
+
+      if (state.results.length > 0) {
+        if (state.results.some((game) => game.id === action.payload.id)) {
+          state.results = state.results.filter(
+            (game) => game.id !== action.payload.id
+          );
+        } else {
+          state.results.push(action.payload as Game);
+        }
+      }
     },
-    deleteGame: () => {},
   },
 });
 
-export const { addGame, deleteGame } = favoritesGamesReducer.actions;
+export const { toggleLikeGame } = favoritesGamesReducer.actions;
 
 export default favoritesGamesReducer.reducer;

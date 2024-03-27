@@ -5,7 +5,7 @@ import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
-import { getStoreLinkInHeader } from "../../utils/getStoreLinkInHeader";
+import { getElementBySelector } from "../../utils/getElementBySelector";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
@@ -14,10 +14,9 @@ import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
 
 const GamesPage = () => {
-  const [allGames, setAllGames] = useState<ResponseGamesData>();
+  const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
   const [searchGameName, setSearchGameName] = useState<string>("");
-  const [searchNumPage, setSearchNumPage] = useState<number>(1);
   const [numPage, setNumPage] = useState<number>(1);
   const [pageQty, setPageQty] = useState<number>(0);
 
@@ -31,10 +30,13 @@ const GamesPage = () => {
   useEffect(() => {
     const isGamesPage = window.location.pathname === "/games";
 
-    getStoreLinkInHeader()?.addEventListener("click", updateGamesList);
+    getElementBySelector("#store")?.addEventListener("click", updateGamesList);
 
     if (!isGamesPage) {
-      getStoreLinkInHeader()?.removeEventListener("click", updateGamesList);
+      getElementBySelector("#store")?.removeEventListener(
+        "click",
+        updateGamesList
+      );
     }
   }, []);
 
@@ -95,7 +97,6 @@ const GamesPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
             setSearchGameName={setSearchGameName}
-            setSearchNumPage={setSearchNumPage}
           />
           <ErrorData errorText='Games Not Found ;-(' />
         </Container>
@@ -119,7 +120,6 @@ const GamesPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
             setSearchGameName={setSearchGameName}
-            setSearchNumPage={setSearchNumPage}
           />
           <ErrorData errorText='Error data games. Bad request.' />
         </Container>
@@ -143,7 +143,6 @@ const GamesPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
             setSearchGameName={setSearchGameName}
-            setSearchNumPage={setSearchNumPage}
           />
         )}
 

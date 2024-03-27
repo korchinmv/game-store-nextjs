@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { useAppDispatch } from "@/redux/hooks";
-import { addGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
+import { toggleLikeGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
 import { Game } from "@/types/Game";
 import Link from "next/link";
-import { useState } from "react";
 
 const noPicImagePath =
   "https://i.pinimg.com/originals/7e/1d/3b/7e1d3b6b9b0a1e48ff975850597cc70e.jpg";
@@ -19,7 +19,8 @@ const GameCard = ({ game }: GameProps) => {
   const dispatch = useAppDispatch();
 
   const handleLikeBtnClick = () => {
-    setLikeBtnState((likeBtnState) => !likeBtnState);
+    dispatch(toggleLikeGame(game));
+    setLikeBtnState(() => !likeBtnState);
   };
 
   return (
@@ -49,7 +50,6 @@ const GameCard = ({ game }: GameProps) => {
               className={`animation ${likeBtnState ? "like-active" : ""}`}
               aria-label='Add to favorites'
               onClick={() => {
-                dispatch(addGame(game));
                 handleLikeBtnClick();
               }}
             >

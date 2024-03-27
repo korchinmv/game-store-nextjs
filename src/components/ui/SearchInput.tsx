@@ -8,12 +8,10 @@ const SearchInput = ({
   setSearchGameName,
   inputSearchForm,
   setInputSearchForm,
-  setSearchNumPage,
 }: {
   setSearchGameName: Dispatch<SetStateAction<string>>;
   inputSearchForm: string;
   setInputSearchForm: Dispatch<SetStateAction<string>>;
-  setSearchNumPage: Dispatch<SetStateAction<number>>;
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
   const [trigger, { data: searchDataGames }] = useLazyGetSearchGamesQuery();
@@ -45,7 +43,6 @@ const SearchInput = ({
       trigger({ gameName: inputSearchForm, numberPage: 1 });
       setSearchGameName(inputSearchForm);
       setInputError(false);
-      setSearchNumPage(1);
       sessionStorage.setItem("searchPageNumber", JSON.stringify(1));
     }
   };
