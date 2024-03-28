@@ -1,6 +1,9 @@
 "use client";
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
+import { useAppSelector } from "@/redux/hooks";
 import { usePathname } from "next/navigation";
+import { GoHeartFill } from "react-icons/go";
+import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import Link from "next/link";
 import Logo from "./ui/Logo";
 import Cart from "./ui/Cart";
@@ -8,7 +11,21 @@ import BurgerButton from "./ui/BurgerButton";
 import Container from "./Container";
 
 const Header: FC = () => {
+  const [likeBtnState, setLikeBtnState] = useState<boolean>(false);
+  const favoritesGamesList = useAppSelector(favoritesGamesSelector);
   const pathname = usePathname();
+
+  const checkButtonLinkState = () => {
+    if (favoritesGamesList?.results.length > 0) {
+      setLikeBtnState(true);
+    } else {
+      setLikeBtnState(false);
+    }
+  };
+
+  useEffect(() => {
+    checkButtonLinkState();
+  }, [favoritesGamesList]);
 
   return (
     <header className='py-[10px] mb-[30px] lg:mb-[60px] lg:py-[20px] bg-[--bg-dark-red] shadow-[--accent-color] shadow-[0px_3px_8px_0px]'>
@@ -70,8 +87,27 @@ const Header: FC = () => {
               </Link>
             </li>
           </ul>
-          <div className='flex items-center'>
+          <div className='flex items-center justify-center'>
+            <Link
+              className={`animation ${
+                likeBtnState ? "like-active" : ""
+              } mr-[10px] relative`}
+              aria-label='Go to favorites games page'
+              href='/favorites'
+            >
+              <GoHeartFill size='30' color={"inherit"} />
+
+              {favoritesGamesList?.results.length !== 0 && (
+                <span className='text-[10px] absolute bottom-[5px] right-[0] block rounded-full bg-[--white-color] w-[15px] h-[15px] flex items-center justify-center'>
+                  {favoritesGamesList?.results.length !== 0
+                    ? favoritesGamesList?.results.length
+                    : null}
+                </span>
+              )}
+            </Link>
+
             <Cart />
+
             <BurgerButton />
           </div>
         </nav>

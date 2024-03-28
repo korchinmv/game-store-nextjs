@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import { IoCartOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleLikeGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
 import { Game } from "@/types/Game";
 import Link from "next/link";
@@ -17,6 +18,16 @@ interface GameProps {
 const GameCard = ({ game }: GameProps) => {
   const [likeBtnState, setLikeBtnState] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+
+  const favoritesGamesList = useAppSelector(favoritesGamesSelector);
+
+  useEffect(() => {
+    if (
+      favoritesGamesList?.results.some((favoriteGame) => favoriteGame === game)
+    ) {
+      setLikeBtnState(true);
+    }
+  }, [favoritesGamesList?.results, game]);
 
   const handleLikeBtnClick = () => {
     dispatch(toggleLikeGame(game));
@@ -45,7 +56,7 @@ const GameCard = ({ game }: GameProps) => {
             ) : null}
           </div>
 
-          <div>
+          <div className='flex items-center'>
             <button
               className={`animation ${likeBtnState ? "like-active" : ""}`}
               aria-label='Add to favorites'
