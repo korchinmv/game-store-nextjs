@@ -4,6 +4,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
 import { ResponseGamesData } from "@/types/ResponseGamesData";
+import { getLocalStorage } from "@/utils/getLocalStorage";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import GamesList from "@/components/GamesList";
@@ -13,6 +14,14 @@ const FavoritesPage = () => {
   const [favoritesGames, setFavoritesGames] =
     useState<ResponseGamesData | null>(null);
   const favoritesGamesList = useAppSelector(favoritesGamesSelector);
+
+  useEffect(() => {
+    const storageFavoritesList = getLocalStorage("favoritesList");
+    if (storageFavoritesList) {
+      setFavoritesGames(storageFavoritesList);
+      console.log(storageFavoritesList);
+    }
+  }, []);
 
   useEffect(() => {
     if (favoritesGamesList) {

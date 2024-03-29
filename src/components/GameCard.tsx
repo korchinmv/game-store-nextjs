@@ -6,6 +6,8 @@ import { GoHeartFill } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleLikeGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
 import { Game } from "@/types/Game";
+import { getLocalStorage } from "@/utils/getLocalStorage";
+import { ResponseGamesData } from "@/types/ResponseGamesData";
 import Link from "next/link";
 
 const noPicImagePath =
@@ -18,16 +20,25 @@ interface GameProps {
 const GameCard = ({ game }: GameProps) => {
   const [likeBtnState, setLikeBtnState] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-
   const favoritesGamesList = useAppSelector(favoritesGamesSelector);
+  const storageFavoritesList: ResponseGamesData =
+    getLocalStorage("favoritesList");
 
   useEffect(() => {
+    console.log(storageFavoritesList?.results);
+
     if (
-      favoritesGamesList?.results.some((favoriteGame) => favoriteGame === game)
+      storageFavoritesList?.results.some(
+        (favoriteGame: Game) => favoriteGame === game
+      )
     ) {
       setLikeBtnState(true);
     }
-  }, [favoritesGamesList?.results, game]);
+  }, [storageFavoritesList?.results, game]);
+
+  useEffect(() => {
+    localStorage.setItem("favoritesList", JSON.stringify(favoritesGamesList));
+  }, [favoritesGamesList]);
 
   const handleLikeBtnClick = () => {
     dispatch(toggleLikeGame(game));
