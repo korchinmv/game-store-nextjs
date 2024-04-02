@@ -114,12 +114,13 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                     buttonText='Add to cart'
                     price={dataGame?.playtime}
                     labelName={dataGame?.name}
-                    cssStyles='mb-[20px] sm:mr-[30px] sm:mb-[0px]'
+                    css='mb-[20px] sm:mr-[30px] sm:mb-[0px]'
+                    game={dataGame}
                   />
                   {dataGame?.metacritic && dataGame?.rating ? (
                     <>
-                      <div className='rating border border-[--accent-color] p-[20px] w-full'>
-                        <h2 className='text-[24px] mb-[10px] text-center'>
+                      <div className='rating border border-[--accent-color] p-[20px] w-full flex flex-col justify-center'>
+                        <h2 className='text-[30px] mb-[15px] text-center'>
                           Game rating
                         </h2>
 

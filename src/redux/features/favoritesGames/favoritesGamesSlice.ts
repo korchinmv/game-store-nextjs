@@ -8,7 +8,7 @@ const games =
     ? getLocalStorage("favoritesGames")
     : [];
 
-const totalQuantity =
+const totalFavoritesQuantity =
   getLocalStorage("totalFavoritesGames") !== null
     ? getLocalStorage("totalFavoritesGames")
     : 0;
@@ -20,12 +20,12 @@ const setItemFunc = (games: Game | Game[], totalQuantity: number): void => {
 
 interface InitialState {
   results: Game[];
-  totalQuantity: number;
+  totalFavoritesQuantity: number;
 }
 
 const initialState: InitialState = {
   results: games,
-  totalQuantity,
+  totalFavoritesQuantity,
 };
 
 export const favoritesGamesReducer = createSlice({

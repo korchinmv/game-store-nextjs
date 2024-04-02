@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import { IoCartOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
-import { GoHeartFill } from "react-icons/go";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { toggleLikeGame } from "@/redux/features/favoritesGames/favoritesGamesSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { Game } from "@/types/Game";
 import Link from "next/link";
+import LikeButton from "./ui/LikeButton";
 
 const noPicImagePath =
   "https://i.pinimg.com/originals/7e/1d/3b/7e1d3b6b9b0a1e48ff975850597cc70e.jpg";
@@ -16,25 +15,6 @@ interface GameProps {
 }
 
 const GameCard = ({ game }: GameProps) => {
-  const [likeBtnState, setLikeBtnState] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const favoritesGamesList = useAppSelector(favoritesGamesSelector);
-
-  useEffect(() => {
-    if (
-      favoritesGamesList?.results.some(
-        (favoriteGame) => favoriteGame.id === game.id
-      )
-    ) {
-      setLikeBtnState(true);
-    }
-  }, [game.id, favoritesGamesList]);
-
-  const handleLikeBtnClick = () => {
-    dispatch(toggleLikeGame(game));
-    setLikeBtnState(() => !likeBtnState);
-  };
-
   return (
     <li>
       <article
@@ -58,15 +38,12 @@ const GameCard = ({ game }: GameProps) => {
           </div>
 
           <div className='flex items-center'>
-            <button
-              className={`animation ${likeBtnState ? "like-active" : ""}`}
-              aria-label='Add to favorites'
-              onClick={() => {
-                handleLikeBtnClick();
-              }}
-            >
-              <GoHeartFill size='24' color={"inherit"} />
-            </button>
+            <LikeButton
+              game={game}
+              label='Add to favorite game list'
+              heartSize='24'
+            />
+
             {game?.playtime === 0 || game?.playtime === undefined ? null : (
               <button className='animation' aria-label='Add to cart'>
                 <IoCartOutline size='25' />

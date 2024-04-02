@@ -18,7 +18,7 @@
 
 body {
   background-color: var(--bg-color);
-  background-image: url("../../public/sprinkle.svg");
+  background-image: url("../../public/background.svg");
   color: var(--white-color);
   font-family: var(--roboto-condensed, sans-serif);
   font-size: 18px;
