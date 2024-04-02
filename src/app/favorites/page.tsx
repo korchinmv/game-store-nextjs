@@ -15,14 +15,6 @@ const FavoritesPage = () => {
     useState<ResponseGamesData | null>(null);
   const favoritesGamesList = useAppSelector(favoritesGamesSelector);
 
-  // useEffect(() => {
-  //   const storageFavoritesList: ResponseGamesData =
-  //     getLocalStorage("favoritesGames");
-  //   if (storageFavoritesList) {
-  //     setFavoritesGames(storageFavoritesList);
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (favoritesGamesList?.results.length >= 0) {
       setFavoritesGames(favoritesGamesList);

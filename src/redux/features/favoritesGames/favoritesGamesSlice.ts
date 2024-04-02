@@ -1,3 +1,4 @@
+"use client";
 import { Game } from "@/types/Game";
 import { getLocalStorage } from "@/utils/getLocalStorage";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
