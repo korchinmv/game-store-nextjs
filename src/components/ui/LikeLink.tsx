@@ -24,7 +24,7 @@ const LikeLink = ({ path, label, heartSize }: LikeLinkProps) => {
     if (favoritesGamesList?.results.length === 0) {
       setCountLikes(0);
     }
-  }, [favoritesGamesList?.results.length, countLikes]);
+  }, [favoritesGamesList, countLikes]);
 
   return (
     <Link

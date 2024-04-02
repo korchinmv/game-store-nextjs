@@ -53,21 +53,11 @@ const Header: FC = () => {
             <li className='mx-3'>
               <Link
                 className={
-                  pathname === "/news" ? "animation text-red-400" : "animation"
+                  pathname === "/cart" ? "animation text-red-400" : "animation"
                 }
-                href='/news'
+                href='/cart'
               >
-                News
-              </Link>
-            </li>
-            <li className='mx-3'>
-              <Link
-                className={
-                  pathname === "/about" ? "animation text-red-400" : "animation"
-                }
-                href='/about'
-              >
-                About project
+                Cart
               </Link>
             </li>
           </ul>
