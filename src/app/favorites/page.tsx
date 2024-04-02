@@ -15,24 +15,25 @@ const FavoritesPage = () => {
     useState<ResponseGamesData | null>(null);
   const favoritesGamesList = useAppSelector(favoritesGamesSelector);
 
-  useEffect(() => {
-    const storageFavoritesList = getLocalStorage("favoritesList");
-    if (storageFavoritesList) {
-      setFavoritesGames(storageFavoritesList);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storageFavoritesList: ResponseGamesData =
+  //     getLocalStorage("favoritesGames");
+  //   if (storageFavoritesList) {
+  //     setFavoritesGames(storageFavoritesList);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (favoritesGamesList) {
+    if (favoritesGamesList?.results.length >= 0) {
       setFavoritesGames(favoritesGamesList);
     }
   }, [favoritesGamesList]);
 
   const breadcrumbs = [
-    <Link className="animation" underline="none" key="1" color="white" href="/">
+    <Link className='animation' underline='none' key='1' color='white' href='/'>
       Home
     </Link>,
-    <Typography key="2" color="white">
+    <Typography key='2' color='white'>
       Favorites Games
     </Typography>,
   ];
@@ -42,24 +43,23 @@ const FavoritesPage = () => {
       <Container>
         <Breadcrumbs
           sx={{ marginBottom: "10px", alignSelf: "start" }}
-          separator=">"
-          color="white"
-          aria-label="breadcrumbs"
+          separator='>'
+          color='white'
+          aria-label='breadcrumbs'
         >
           {breadcrumbs}
         </Breadcrumbs>
 
         <SubTitle name={"Favorites Games"} />
 
-        {favoritesGames !== null &&
-          (favoritesGames.results.length > 0 ? (
-            <p className="text-center mb-[20px]">{`You have added ${favoritesGames?.results.length} games`}</p>
-          ) : null)}
+        {favoritesGames?.results.length ? (
+          <p className='text-center mb-[20px]'>{`You have added ${favoritesGames?.results.length} games`}</p>
+        ) : null}
 
-        {favoritesGamesList.results.length !== 0 ? (
+        {favoritesGames?.results.length ? (
           <GamesList dataGames={favoritesGames} />
         ) : (
-          <ErrorData errorText="Add Games to your favorites." />
+          <ErrorData errorText='Add Games to your favorites.' />
         )}
       </Container>
     </section>
