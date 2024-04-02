@@ -69,7 +69,7 @@ const SearchInput = ({
       onSubmit={handleSubmit}
     >
       <input
-        className='w-full py-[7px] pl-[15px] pr-[100px] bg-transparent text-[--white-color] outline-none border-[1px] border-[--grey-color] rounded-[4px] transition-all hover:border-[--accent-color] focus:border-[--accent-color]'
+        className='w-full py-[7px] pl-[15px] pr-[100px] bg-transparent text-[--white-color] outline-none border-[1px] border-[--grey-color] rounded-[4px] transition-all hover:border-[--accent-color] focus:border-[--accent-color] focus:bg-[--light-black]'
         placeholder='Search games...'
         value={inputSearchForm}
         onChange={handleInputChange}

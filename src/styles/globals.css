@@ -4,7 +4,7 @@
 
 :root {
   --accent-color: #ed5564;
-  --bg-color: #161a1e;
+  --bg-color: #23374a;
   --white-color: #fff;
   --grey-color: #696969;
   --black: #000;
@@ -13,10 +13,12 @@
   --green-color: #008000;
   --yellow-color: #f4a900;
   --red-color: #b00000;
+  --light-black: rgba(0, 0, 0, 0.3);
 }
 
 body {
   background-color: var(--bg-color);
+  background-image: url("../../public/sprinkle.svg");
   color: var(--white-color);
   font-family: var(--roboto-condensed, sans-serif);
   font-size: 18px;

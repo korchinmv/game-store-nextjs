@@ -1,7 +1,7 @@
+import { FC } from "react";
 import logoPick from "../../../public/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
 
 const Logo: FC = () => {
   return (
