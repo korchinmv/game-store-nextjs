@@ -12,6 +12,8 @@ import ErrorData from "@/components/ErrorData";
 import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
+import MenuButton from "@/components/ui/MenuButton";
+import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
 
 const GamesPage = () => {
   const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
@@ -26,6 +28,9 @@ const GamesPage = () => {
     error: errorGames,
     isFetching: fetchingGetGames,
   } = useGetGamesQuery({ quantity: 20, numberPage: numPage });
+
+  const { isLoading: loadingPlatformsQuery, data: dataPlatforms } =
+    useGetPlatformsQuery(10);
 
   useEffect(() => {
     const isGamesPage = window.location.pathname === "/games";
@@ -149,7 +154,18 @@ const GamesPage = () => {
         <div className='flex flex-col items-center'>
           <Title name={"All Games"} />
 
-          {loadingGamesQuery || fetchingGetGames ? (
+          {!loadingGamesQuery ? (
+            <div className='menu-block mb-[30px] flex self-start'>
+              {dataPlatforms && (
+                <MenuButton
+                  name='Platforms'
+                  dataPlatforms={dataPlatforms?.results}
+                />
+              )}
+            </div>
+          ) : null}
+
+          {loadingGamesQuery || fetchingGetGames || loadingPlatformsQuery ? (
             <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>

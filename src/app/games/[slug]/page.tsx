@@ -5,14 +5,14 @@ import {
   useGetGameScreenshotsQuery,
 } from "@/redux/api/games.api";
 import { CSSProperties, ReactNode } from "react";
-import { ClipLoader, PacmanLoader, PuffLoader } from "react-spinners";
-import { Genre } from "@/types/Genre";
+import { ClipLoader, PacmanLoader } from "react-spinners";
 import { Platform } from "@/types/Platform";
 import { Developer } from "@/types/Developer";
 import { Game } from "@/types/Game";
 import { Typography, Link as MuiLink } from "@mui/material";
 import { trimString } from "@/utils/trimString";
 import { Breadcrumbs } from "@mui/material";
+import { Response } from "@/types/Response";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import TextWithMoreButton from "@/components/ui/TextWithMoreButton";
@@ -156,18 +156,20 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                         {dataGame?.genres.length > 1 ? "Genres:" : "Genre:"}
                       </td>
                       <td className='bg-[--accent-color] px-[5px] sm:px-[20px]'>
-                        {dataGame?.genres.map((genre: Genre, index: number) => {
-                          return (
-                            <Link
-                              className='underline animation hover:text-[--bg-color]'
-                              href={`/genres/${genre.slug}`}
-                              key={genre.id}
-                            >
-                              {genre.name}
-                              {index < dataGame.genres.length - 1 ? ", " : ""}
-                            </Link>
-                          );
-                        })}
+                        {dataGame?.genres.map(
+                          (genre: Response, index: number) => {
+                            return (
+                              <Link
+                                className='underline animation hover:text-[--bg-color]'
+                                href={`/genres/${genre.slug}`}
+                                key={genre.id}
+                              >
+                                {genre.name}
+                                {index < dataGame.genres.length - 1 ? ", " : ""}
+                              </Link>
+                            );
+                          }
+                        )}
                       </td>
                     </tr>
                     <tr>

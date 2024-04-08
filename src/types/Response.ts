@@ -1,15 +1,18 @@
-export type GenreGame = {
+export type ResponseGame = {
   added: number;
   id: number;
   name: string;
   slug: string;
 };
 
-export type Genre = {
+export type Response = {
   games_count: number;
   id: number;
+  image?: string;
   image_background: string;
   name: string;
   slug: string;
-  games: GenreGame[];
+  games: ResponseGame[];
+  year_start?: number;
+  year_end?: number;
 };
