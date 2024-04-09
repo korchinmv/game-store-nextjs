@@ -2,6 +2,7 @@ import { Typography, Link as MuiLink, Breadcrumbs } from "@mui/material";
 import { CSSProperties } from "react";
 import { PacmanLoader } from "react-spinners";
 import Container from "@/components/Container";
+import SubTitle from "@/components/SubTitle";
 
 interface PlatformsGamesPageProps {
   params: { slug: "string" };
@@ -16,24 +17,24 @@ const PlatformsGamesPage = ({ params: { slug } }: PlatformsGamesPageProps) => {
 
   const breadcrumbs = [
     <MuiLink
-      className='animation'
-      underline='none'
-      key='1'
-      color='white'
-      href='/'
+      className="animation"
+      underline="none"
+      key="1"
+      color="white"
+      href="/"
     >
       Home
     </MuiLink>,
     <MuiLink
-      className='animation'
-      underline='none'
-      key='2'
-      color='white'
-      href='/games'
+      className="animation"
+      underline="none"
+      key="2"
+      color="white"
+      href="/games"
     >
       Game Store
     </MuiLink>,
-    <Typography key='3' color='white'>
+    <Typography key="3" color="white">
       {slug}
     </Typography>,
   ];
@@ -47,14 +48,16 @@ const PlatformsGamesPage = ({ params: { slug } }: PlatformsGamesPageProps) => {
           <> */}
         <Breadcrumbs
           sx={{ marginBottom: "20px" }}
-          separator='>'
-          color='white'
-          aria-label='breadcrumbs'
+          separator=">"
+          color="white"
+          aria-label="breadcrumbs"
         >
           {breadcrumbs}
         </Breadcrumbs>
-        {/* </>
-        )} */}
+
+        <div className="flex flex-col items-center">
+          <SubTitle name={`${slug} Games`} />
+        </div>
       </Container>
     </section>
   );

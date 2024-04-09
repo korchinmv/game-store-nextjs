@@ -36,7 +36,7 @@ const LikeButton = ({ game, label, heartSize, text, css }: LikeButtonProps) => {
   return (
     <div className={`like-button ${css}`}>
       {text ? (
-        <span className='mr-[10px] text-[26px] font-bold uppercase'>
+        <span className="mr-[10px] text-[26px] font-bold uppercase">
           {text}
         </span>
       ) : null}

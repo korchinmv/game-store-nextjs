@@ -55,19 +55,19 @@ const SearchPage = () => {
   }, [dataGames]);
 
   const breadcrumbs = [
-    <Link className='animation' underline='none' key='1' color='white' href='/'>
+    <Link className="animation" underline="none" key="1" color="white" href="/">
       Home
     </Link>,
     <Link
-      className='animation'
-      underline='none'
-      key='2'
-      color='white'
-      href='/games'
+      className="animation"
+      underline="none"
+      key="2"
+      color="white"
+      href="/games"
     >
       Game Store
     </Link>,
-    <Typography key='3' color='white'>
+    <Typography key="3" color="white">
       Found Games
     </Typography>,
   ];
@@ -78,9 +78,9 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -90,7 +90,7 @@ const SearchPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
           />
-          <ErrorData errorText='Games Not Found ;-(' />
+          <ErrorData errorText="Games Not Found ;-(" />
         </Container>
       </section>
     );
@@ -102,9 +102,9 @@ const SearchPage = () => {
         <Container>
           <Breadcrumbs
             sx={{ marginBottom: "10px", alignSelf: "start" }}
-            separator='>'
-            color='white'
-            aria-label='breadcrumbs'
+            separator=">"
+            color="white"
+            aria-label="breadcrumbs"
           >
             {breadcrumbs}
           </Breadcrumbs>
@@ -113,7 +113,7 @@ const SearchPage = () => {
             inputSearchForm={inputSearchForm}
             setInputSearchForm={setInputSearchForm}
           />
-          <ErrorData errorText='Error data games. Bad request.' />
+          <ErrorData errorText="Error data games. Bad request." />
         </Container>
       </section>
     );
@@ -123,9 +123,9 @@ const SearchPage = () => {
       <Container>
         <Breadcrumbs
           sx={{ marginBottom: "10px", alignSelf: "start" }}
-          separator='>'
-          color='white'
-          aria-label='breadcrumbs'
+          separator=">"
+          color="white"
+          aria-label="breadcrumbs"
         >
           {breadcrumbs}
         </Breadcrumbs>
@@ -138,16 +138,16 @@ const SearchPage = () => {
           />
         )}
 
-        <div className='flex flex-col items-center'>
+        <div className="flex flex-col items-center">
           <SubTitle name={"Found Games"} />
 
           {loadingGamesQuery || fetchingGameSearch ? (
-            <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
+            <PacmanLoader className="mx-auto my-0 mt-[100px]" color="#ed5564" />
           ) : (
             <>
               <GamesList dataGames={allGames} />
 
-              {allGames && (
+              {allGames?.results.length !== 0 ? (
                 <PaginationComponent
                   pageQty={pageQty}
                   searchNumPage={searchNumPage}
@@ -155,6 +155,8 @@ const SearchPage = () => {
                   searchGameName={searchGameName}
                   handleGetSearchGames={trigger}
                 />
+              ) : (
+                <ErrorData errorText="This Game not Found" />
               )}
             </>
           )}
