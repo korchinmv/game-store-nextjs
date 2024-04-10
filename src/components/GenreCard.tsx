@@ -5,7 +5,7 @@ interface GenreCardProps {
   name: string;
   slug: string;
   bgImage: string;
-  games: GenreGame[];
+  games: ResponseGame[];
 }
 
 const GenreCard = ({ name, slug, bgImage, games }: GenreCardProps) => {
