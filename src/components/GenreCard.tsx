@@ -1,4 +1,4 @@
-import { GenreGame } from "@/types/Genre";
+import { ResponseGame } from "@/types/Response";
 import Link from "next/link";
 
 interface GenreCardProps {
@@ -26,7 +26,7 @@ const GenreCard = ({ name, slug, bgImage, games }: GenreCardProps) => {
         <div>
           <h3 className='md:text-[22px]'>Best games in genre:</h3>
           <ul>
-            {games?.slice(0, 3).map((game: GenreGame) => {
+            {games?.slice(0, 3).map((game: ResponseGame) => {
               return (
                 <li key={game.id}>
                   <Link
