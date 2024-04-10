@@ -1,8 +1,8 @@
 "use client";
 import { useGetGenresQuery } from "@/redux/api/genres.api";
-import { Genre } from "@/types/Genre";
 import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { Response } from "@/types/Response";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import GenreCard from "@/components/GenreCard";
@@ -40,7 +40,7 @@ const GenresPage = () => {
           <PacmanLoader className='mx-auto my-0 pt-[40px]' color='#ed5564' />
         ) : (
           <ul className='grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 xl:gap-[25px] pt-[10px] md:pt-[40px]'>
-            {data.results.map((genre: Genre) => (
+            {data.results.map((genre: Response) => (
               <GenreCard
                 key={genre.id}
                 name={genre.name}
