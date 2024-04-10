@@ -1,4 +1,4 @@
-import { Genre } from "./Genre";
+import { Response } from "@/types/Response";
 import { Platform } from "./Platform";
 
 type Tag = {
@@ -62,7 +62,7 @@ export type Game = {
     name: string;
     slug: string;
   };
-  genres: Genre[];
+  genres: Response[];
   id: number;
   metacritic: number;
   name: string;
