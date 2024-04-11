@@ -181,10 +181,12 @@ const GamePage = ({ params: { slug } }: GamePageProps): ReactNode => {
                       <td className='py-[10px] px-[5px] sm:px-[20px]'>
                         {dataGame?.platforms.map(
                           (obj: Platform, index: number) => {
+                            console.log(obj);
+
                             return (
                               <Link
                                 className='underline animation'
-                                href={`/platform/${obj.platform.slug}`}
+                                href={`/games/platforms/${obj.platform.id}`}
                                 key={obj.platform.id}
                               >
                                 {obj.platform.name}

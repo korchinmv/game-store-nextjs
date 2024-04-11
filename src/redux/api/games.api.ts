@@ -28,6 +28,11 @@ export const gamesApi = api.injectEndpoints({
     getGameDlc: builder.query({
       query: (id) => `games/${id}/additions?key=${process.env.KEY_GAMESTORE}`,
     }),
+    getGamesByPlatforms: builder.query({
+      query: ({ id, quantity }) => {
+        return `games?platforms=${id}&page_size=${quantity}&filter=true&comments=true&key=${process.env.KEY_GAMESTORE}`;
+      },
+    }),
   }),
 });
 
@@ -38,4 +43,5 @@ export const {
   useGetGameScreenshotsQuery,
   useGetGameDlcQuery,
   useLazyGetSearchGamesQuery,
+  useGetGamesByPlatformsQuery,
 } = gamesApi;

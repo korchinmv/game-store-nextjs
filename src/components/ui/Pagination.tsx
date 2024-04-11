@@ -10,7 +10,7 @@ interface PaginationComponentProps {
   numPage?: number;
   setNumPage?: Dispatch<SetStateAction<number>>;
   handleGetSearchGames?: LazyGetTriggerType;
-  searchGameName: string;
+  searchGameName?: string;
   searchNumPage?: number;
   setSearchNumPage?: Dispatch<SetStateAction<number>>;
 }
@@ -38,7 +38,7 @@ const PaginationComponent = ({
         defaultPage={1}
         sx={{
           ".Mui-selected": {
-            backgroundColor: "#ED5564",
+            backgroundColor: "rgb(237, 85, 100) !important",
             color: "#fff",
           },
           ".MuiPagination-ul li": {
@@ -55,6 +55,7 @@ const PaginationComponent = ({
                 numberPage: num,
               });
             }
+
             if (setSearchNumPage) {
               setSearchNumPage(num);
               sessionStorage.setItem("searchPageNumber", JSON.stringify(num));
