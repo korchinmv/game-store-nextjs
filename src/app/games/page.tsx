@@ -6,6 +6,7 @@ import { Breadcrumbs, Typography, Link } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
 import { getElementBySelector } from "../../utils/getElementBySelector";
+import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
@@ -13,7 +14,6 @@ import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
 import MenuButton from "@/components/ui/MenuButton";
-import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
 
 const GamesPage = () => {
   const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);

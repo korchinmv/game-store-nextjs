@@ -29,8 +29,10 @@ export const gamesApi = api.injectEndpoints({
       query: (id) => `games/${id}/additions?key=${process.env.KEY_GAMESTORE}`,
     }),
     getGamesByPlatforms: builder.query({
-      query: ({ id, quantity }) => {
-        return `games?platforms=${id}&page_size=${quantity}&filter=true&comments=true&key=${process.env.KEY_GAMESTORE}`;
+      query: ({ id, quantity, numberPage }) => {
+        return `games?platforms=${id}&page_size=${quantity}&filter=true&comments=true&key=${
+          process.env.KEY_GAMESTORE
+        }&page=${numberPage ? numberPage : ""}`;
       },
     }),
   }),

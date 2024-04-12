@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
+import { ThemeProvider, styled } from "@mui/material/styles";
 import { IoIosArrowDown } from "react-icons/io";
 import { Response } from "@/types/Response";
 import { createTheme } from "@mui/material/styles";
@@ -15,6 +15,7 @@ const theme = createTheme({
     },
     secondary: {
       main: "#23374a",
+      light: "#fff",
     },
   },
 });
@@ -44,8 +45,12 @@ const StyledMenu = styled((props: MenuProps) => (
       padding: "0",
     },
     "& .MuiMenuItem-root": {
+      "&:hover": {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.secondary.light,
+      },
       "&:active": {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.primary.main,
       },
     },
   },
@@ -67,45 +72,47 @@ const MenuButton = ({ name, dataPlatforms }: MenuButtonProps) => {
   };
 
   return (
-    <div>
-      <Button
-        className='bg-[--light-black] flex items-center justify-center hover:bg-[--accent-color]'
-        id='demo-customized-button'
-        aria-controls={open ? "demo-customized-menu" : undefined}
-        aria-haspopup='true'
-        aria-expanded={open ? "true" : undefined}
-        variant='contained'
-        onClick={handleClick}
-        endIcon={<IoIosArrowDown />}
-        color={theme.palette.secondary.main}
-      >
-        {name}
-      </Button>
-      <StyledMenu
-        id='demo-customized-menu'
-        MenuListProps={{
-          "aria-labelledby": "demo-customized-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        {dataPlatforms.map((item: Response) => {
-          return (
-            <MenuItem
-              className='hover:bg-[--accent-color] hover:text-[--white-color]'
-              key={item.id}
-              onClick={handleClose}
-              disableRipple
-            >
-              <Link className='w-full' href={`/games/platforms/${item.id}`}>
-                {item.name}
-              </Link>
-            </MenuItem>
-          );
-        })}
-      </StyledMenu>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <Button
+          className='flex items-center justify-center'
+          id='demo-customized-button'
+          aria-controls={open ? "demo-customized-menu" : undefined}
+          aria-haspopup='true'
+          aria-expanded={open ? "true" : undefined}
+          variant='contained'
+          onClick={handleClick}
+          endIcon={<IoIosArrowDown />}
+          sx={{ bgcolor: `theme.secondary.main` }}
+        >
+          {name}
+        </Button>
+        <StyledMenu
+          id='demo-customized-menu'
+          MenuListProps={{
+            "aria-labelledby": "demo-customized-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+          {dataPlatforms.map((item: Response) => {
+            return (
+              <MenuItem
+                className=''
+                key={item.id}
+                onClick={handleClose}
+                disableRipple
+              >
+                <Link className='w-full' href={`/games/platforms/${item.id}`}>
+                  {item.name}
+                </Link>
+              </MenuItem>
+            );
+          })}
+        </StyledMenu>
+      </ThemeProvider>
+    </>
   );
 };
 
