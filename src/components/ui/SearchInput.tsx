@@ -1,8 +1,8 @@
 "use client";
-import { CiSearch } from "react-icons/ci";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useLazyGetSearchGamesQuery } from "@/redux/api/games.api";
+import { useRouter } from "next/navigation";
+import { CiSearch } from "react-icons/ci";
 
 const SearchInput = ({
   setSearchGameName,
@@ -15,6 +15,7 @@ const SearchInput = ({
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
   const [trigger, { data: searchDataGames }] = useLazyGetSearchGamesQuery();
+
   const isGamesPage = window.location.pathname === "/games";
   const router = useRouter();
 

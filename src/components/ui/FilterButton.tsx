@@ -3,8 +3,9 @@ import { ThemeProvider, styled } from "@mui/material/styles";
 import { IoIosArrowDown } from "react-icons/io";
 import { Response } from "@/types/Response";
 import { createTheme } from "@mui/material/styles";
+import { sortByButton } from "@/types/SortBy";
+import qs from "qs";
 import Menu, { MenuProps } from "@mui/material/Menu";
-import Link from "next/link";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
@@ -58,24 +59,40 @@ const StyledMenu = styled((props: MenuProps) => (
 
 interface MenuButtonProps {
   name: string;
-  dataPlatforms: Response[];
+  type: string;
+  label: string;
+  data: Response[] | sortByButton[];
 }
 
-const MenuButton = ({ name, dataPlatforms }: MenuButtonProps) => {
+const FilterButton = ({ name, data, type, label }: MenuButtonProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [activeMenuItem, setActiveMenuItem] = React.useState<string>("");
+
   const open = Boolean(anchorEl);
+
+  React.useEffect(() => {
+    const qsString = qs.stringify({});
+    console.log(qsString);
+  }, []);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleChoose = (item: Response | sortByButton) => {
+    setAnchorEl(null);
+    setActiveMenuItem(item.name);
   };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Button
-          className='flex items-center justify-center'
+          style={{ lineHeight: "1" }}
           id='demo-customized-button'
           aria-controls={open ? "demo-customized-menu" : undefined}
           aria-haspopup='true'
@@ -83,9 +100,10 @@ const MenuButton = ({ name, dataPlatforms }: MenuButtonProps) => {
           variant='contained'
           onClick={handleClick}
           endIcon={<IoIosArrowDown />}
+          aria-label={label}
           sx={{ bgcolor: `theme.secondary.main` }}
         >
-          {name}
+          {activeMenuItem ? activeMenuItem : name}
         </Button>
         <StyledMenu
           id='demo-customized-menu'
@@ -96,17 +114,14 @@ const MenuButton = ({ name, dataPlatforms }: MenuButtonProps) => {
           open={open}
           onClose={handleClose}
         >
-          {dataPlatforms.map((item: Response) => {
+          {data.map((item: Response | sortByButton) => {
             return (
               <MenuItem
-                className=''
                 key={item.id}
-                onClick={handleClose}
+                onClick={() => handleChoose(item)}
                 disableRipple
               >
-                <Link className='w-full' href={`/games/platforms/${item.id}`}>
-                  {item.name}
-                </Link>
+                {item.name}
               </MenuItem>
             );
           })}
@@ -116,4 +131,4 @@ const MenuButton = ({ name, dataPlatforms }: MenuButtonProps) => {
   );
 };
 
-export default MenuButton;
+export default FilterButton;

@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import { favoritesGamesSelector } from "@/redux/features/favoritesGames/favoritesGamesSelector";
 import { IoCartOutline } from "react-icons/io5";
 import { FaStar } from "react-icons/fa";
-import { useAppSelector } from "@/redux/hooks";
 import { Game } from "@/types/Game";
 import Link from "next/link";
 import LikeButton from "./ui/LikeButton";
@@ -18,7 +15,7 @@ const GameCard = ({ game }: GameProps) => {
   return (
     <li>
       <article
-        className='game-card bg-no-repeat bg-cover bg-top md:bg-center min-h-[170px] md:min-h-[300px] flex flex-col justify-between border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[--accent-color]'
+        className='game-card bg-no-repeat bg-[--bg-color] bg-cover bg-top md:bg-center min-h-[170px] md:min-h-[300px] flex flex-col justify-between border-solid border-[2px] rounded-xl ease-out duration-300 hover:border-[--accent-color]'
         style={{
           backgroundImage: `url(${
             game?.background_image ? game?.background_image : noPicImagePath

@@ -7,13 +7,15 @@ import { useEffect, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
 import { getElementBySelector } from "../../utils/getElementBySelector";
 import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
+import { sortByButton } from "@/utils/mock/mockData";
+import { useSearchParams } from "next/navigation";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
 import ErrorData from "@/components/ErrorData";
 import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
-import MenuButton from "@/components/ui/MenuButton";
+import FilterButton from "@/components/ui/FilterButton";
 
 const GamesPage = () => {
   const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
@@ -21,6 +23,12 @@ const GamesPage = () => {
   const [searchGameName, setSearchGameName] = useState<string>("");
   const [numPage, setNumPage] = useState<number>(1);
   const [pageQty, setPageQty] = useState<number>(0);
+
+  // const searchParams = useSearchParams();
+  // const search = searchParams.get("ordering");
+  // const search2 = searchParams.get("name");
+  // console.log(search);
+  // console.log(search2);
 
   const {
     isLoading: loadingGamesQuery,
@@ -156,12 +164,21 @@ const GamesPage = () => {
         <div className='flex flex-col items-center'>
           {!loadingGamesQuery ? (
             <>
-              <Title name={"All Games"} />{" "}
-              <div className='menu-block mb-[30px] flex self-start'>
+              <Title name={"All Games"} />
+              <div className='menu-block mb-[30px] flex self-start gap-[15px]'>
+                <FilterButton
+                  name='Sort by'
+                  data={sortByButton}
+                  type='ordering'
+                  label='sort games'
+                />
+
                 {dataPlatforms && (
-                  <MenuButton
+                  <FilterButton
                     name='Platforms'
-                    dataPlatforms={dataPlatforms?.results}
+                    data={dataPlatforms?.results}
+                    type='platforms'
+                    label='choose platforms'
                   />
                 )}
               </div>
