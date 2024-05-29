@@ -4,7 +4,6 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Response } from "@/types/Response";
 import { createTheme } from "@mui/material/styles";
 import { sortByButton } from "@/types/SortBy";
-import qs from "qs";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -59,21 +58,16 @@ const StyledMenu = styled((props: MenuProps) => (
 
 interface MenuButtonProps {
   name: string;
-  type: string;
   label: string;
   data: Response[] | sortByButton[];
+  setState: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
 
-const FilterButton = ({ name, data, type, label }: MenuButtonProps) => {
+const FilterButton = ({ name, data, label, setState }: MenuButtonProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [activeMenuItem, setActiveMenuItem] = React.useState<string>("");
 
   const open = Boolean(anchorEl);
-
-  React.useEffect(() => {
-    const qsString = qs.stringify({});
-    console.log(qsString);
-  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -86,6 +80,7 @@ const FilterButton = ({ name, data, type, label }: MenuButtonProps) => {
   const handleChoose = (item: Response | sortByButton) => {
     setAnchorEl(null);
     setActiveMenuItem(item.name);
+    setState(item.id);
   };
 
   return (
