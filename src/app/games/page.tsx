@@ -3,11 +3,12 @@ import { useGetGamesQuery } from "@/redux/api/games.api";
 import { ResponseGamesData } from "@/types/ResponseGamesData";
 import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Typography, Link } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
 import { getElementBySelector } from "../../utils/getElementBySelector";
 import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
 import { sortByButton } from "@/utils/mock/mockData";
+import { useRouter, useSearchParams } from "next/navigation";
 import qs from "qs";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
@@ -16,7 +17,6 @@ import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
 import FilterButton from "@/components/ui/FilterButton";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const GamesPage = () => {
   const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
@@ -24,33 +24,47 @@ const GamesPage = () => {
   const [searchGameName, setSearchGameName] = useState<string>("");
   const [ordering, setOrdering] = useState<string | number | null>(null);
   const [platforms, setPlatforms] = useState<string | number | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<unknown>(null);
   const [numPage, setNumPage] = useState<number>(1);
   const [pageQty, setPageQty] = useState<number>(0);
   const router = useRouter();
 
-  // const params = qs.parse(window.location.search.substring(1));
-
-  // console.log(params);
-
   useEffect(() => {
-    let queryString;
+    const queryString: any = {};
+
     if (ordering !== null) {
-      queryString = qs.stringify({
-        ordering,
-      });
-      router.push(`?${queryString}`);
+      queryString.ordering = ordering;
     }
-  }, [ordering, router]);
+
+    if (platforms !== null) {
+      queryString.platforms = platforms;
+    }
+
+    router.push(`?${qs.stringify(queryString)}`);
+  }, [platforms, ordering, router]);
 
   useEffect(() => {
-    let queryString;
-    if (platforms !== null) {
-      queryString = qs.stringify({
-        platforms,
-      });
-      router.push(`?${queryString}`);
-    }
-  }, [platforms, router]);
+    setIsLoading(true);
+    const fetchFiltredGames = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.BASE_URL_GAMESTORE}games?${
+            ordering ? `ordering=${ordering}&` : ""
+          }${platforms ? `platforms=${platforms}&` : ""}key=${
+            process.env.KEY_GAMESTORE
+          }`
+        );
+        const games = await res.json();
+        setAllGames(games);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchFiltredGames();
+  }, [platforms, ordering]);
 
   const {
     isLoading: loadingGamesQuery,
@@ -139,7 +153,7 @@ const GamesPage = () => {
     );
   }
 
-  if (errorGames)
+  if (errorGames || error)
     return (
       <section>
         <Container>
@@ -207,7 +221,10 @@ const GamesPage = () => {
             </>
           ) : null}
 
-          {loadingGamesQuery || fetchingGetGames || loadingPlatformsQuery ? (
+          {loadingGamesQuery ||
+          fetchingGetGames ||
+          loadingPlatformsQuery ||
+          isLoading ? (
             <PacmanLoader className='mx-auto my-0 mt-[100px]' color='#ed5564' />
           ) : (
             <>
