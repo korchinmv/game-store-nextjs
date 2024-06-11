@@ -3,12 +3,12 @@ import { useGetGamesQuery } from "@/redux/api/games.api";
 import { ResponseGamesData } from "@/types/ResponseGamesData";
 import { PacmanLoader } from "react-spinners";
 import { Breadcrumbs, Typography, Link } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getSessionStorage } from "@/utils/getSessionStorage";
 import { getElementBySelector } from "../../utils/getElementBySelector";
 import { useGetPlatformsQuery } from "@/redux/api/platforms.api";
 import { sortByButton } from "@/utils/mock/mockData";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import qs from "qs";
 import Title from "@/components/SubTitle";
 import Container from "@/components/Container";
@@ -16,55 +16,56 @@ import ErrorData from "@/components/ErrorData";
 import SearchInput from "@/components/ui/SearchInput";
 import PaginationComponent from "@/components/ui/Pagination";
 import GamesList from "@/components/GamesList";
-import FilterButton from "@/components/ui/FilterButton";
+import Filter from "@/components/ui/Filter";
+import { filterGamesSelector } from "@/redux/features/filterGames/filterGamesSelector";
+import { useAppSelector } from "@/redux/hooks";
 
 const GamesPage = () => {
   const [allGames, setAllGames] = useState<ResponseGamesData | null>(null);
   const [inputSearchForm, setInputSearchForm] = useState<string>("");
   const [searchGameName, setSearchGameName] = useState<string>("");
-  const [ordering, setOrdering] = useState<string | number | null>(null);
-  const [platforms, setPlatforms] = useState<string | number | null>(null);
+  const [queryString, setQueryString] = useState<any>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<unknown>(null);
   const [numPage, setNumPage] = useState<number>(1);
   const [pageQty, setPageQty] = useState<number>(0);
+  const [error, setError] = useState<unknown>(null);
+  const filter = useAppSelector(filterGamesSelector);
   const router = useRouter();
 
   useEffect(() => {
-    const queryString: any = {};
-
-    if (ordering !== null) {
-      queryString.ordering = ordering;
+    if (filter.ordering !== null) {
+      queryString.ordering = filter.ordering;
     }
 
-    if (platforms !== null) {
-      queryString.platforms = platforms;
+    if (filter.platform !== null) {
+      queryString.platforms = filter.platform;
     }
 
     router.push(`?${qs.stringify(queryString)}`);
-  }, [platforms, ordering, router]);
+  }, [filter.ordering, filter.platform, queryString, router]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchFiltredGames = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.BASE_URL_GAMESTORE}games?${
-            ordering ? `ordering=${ordering}&` : ""
-          }${platforms ? `platforms=${platforms}&` : ""}key=${
-            process.env.KEY_GAMESTORE
-          }`
-        );
-        const games = await res.json();
-        setAllGames(games);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchFiltredGames();
-  }, [platforms, ordering]);
+  // useEffect(() => {
+  //   const fetchFiltredGames = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `${process.env.BASE_URL_GAMESTORE}games?${
+  //           filter.ordering ? `ordering=${filter.ordering}&` : ""
+  //         }${
+  //           filter.platform ? `platforms=${filter.platform}` : ""
+  //         }&filter=true&key=${process.env.KEY_GAMESTORE}`
+  //       );
+  //       const games = await res.json();
+  //       console.log(games);
+
+  //       setAllGames(games);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchFiltredGames();
+  // }, [filter.platform, filter.ordering]);
 
   const {
     isLoading: loadingGamesQuery,
@@ -72,6 +73,12 @@ const GamesPage = () => {
     error: errorGames,
     isFetching: fetchingGetGames,
   } = useGetGamesQuery({ quantity: 20, numberPage: numPage });
+  console.log(dataGames);
+
+  const handleClickResetFilter = () => {
+    setQueryString({});
+    router.push(`/games`);
+  };
 
   const { isLoading: loadingPlatformsQuery, data: dataPlatforms } =
     useGetPlatformsQuery(10);
@@ -200,24 +207,13 @@ const GamesPage = () => {
         <div className='flex flex-col items-center'>
           {!loadingGamesQuery ? (
             <>
-              <Title name={"All Games"} />
-              <div className='menu-block mb-[30px] flex self-start gap-[15px]'>
-                <FilterButton
-                  name='Sort by'
-                  data={sortByButton}
-                  setState={setOrdering}
-                  label='Sort games'
-                />
-
-                {dataPlatforms && (
-                  <FilterButton
-                    name='Platforms'
-                    data={dataPlatforms?.results}
-                    setState={setPlatforms}
-                    label='Choose platform'
-                  />
-                )}
-              </div>
+              <Title name={allGames?.seo_h1} />
+              <Filter
+                queryString={queryString}
+                handleClickResetFilter={handleClickResetFilter}
+                sortByButton={sortByButton}
+                dataPlatforms={dataPlatforms.results}
+              />
             </>
           ) : null}
 

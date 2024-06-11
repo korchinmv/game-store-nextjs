@@ -1,12 +1,14 @@
 import * as React from "react";
 import { ThemeProvider, styled } from "@mui/material/styles";
 import { IoIosArrowDown } from "react-icons/io";
+import { useAppDispatch } from "@/redux/hooks";
 import { Response } from "@/types/Response";
 import { createTheme } from "@mui/material/styles";
 import { sortByButton } from "@/types/SortBy";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import { setFilter } from "@/redux/features/filterGames/filterGamesSlice";
 
 const theme = createTheme({
   palette: {
@@ -60,13 +62,12 @@ interface MenuButtonProps {
   name: string;
   label: string;
   data: Response[] | sortByButton[];
-  setState: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
 
-const FilterButton = ({ name, data, label, setState }: MenuButtonProps) => {
+const FilterButton = ({ name, data, label }: MenuButtonProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [activeMenuItem, setActiveMenuItem] = React.useState<string>("");
-
+  const dispatch = useAppDispatch();
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -80,7 +81,7 @@ const FilterButton = ({ name, data, label, setState }: MenuButtonProps) => {
   const handleChoose = (item: Response | sortByButton) => {
     setAnchorEl(null);
     setActiveMenuItem(item.name);
-    setState(item.id);
+    dispatch(setFilter(item.id));
   };
 
   return (

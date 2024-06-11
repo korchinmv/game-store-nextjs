@@ -9,9 +9,9 @@ const SearchInput = ({
   inputSearchForm,
   setInputSearchForm,
 }: {
+  setInputSearchForm: Dispatch<SetStateAction<string>>;
   setSearchGameName: Dispatch<SetStateAction<string>>;
   inputSearchForm: string;
-  setInputSearchForm: Dispatch<SetStateAction<string>>;
 }) => {
   const [inputError, setInputError] = useState<boolean>(false);
   const [trigger, { data: searchDataGames }] = useLazyGetSearchGamesQuery();

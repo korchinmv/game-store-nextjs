@@ -1,29 +1,30 @@
-// import { getSessionStorage } from "@/utils/getSessionStorage";
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import qs from "qs";
 
-// const searchValue =
-//   getSessionStorage("searchInputValue") !== null
-//     ? getSessionStorage("searchInputValue")
-//     : [];
+interface InitialState {
+  platform: null | number;
+  ordering: null | string;
+}
 
-// const currentPage =
-//   getSessionStorage("searchPageNumber") !== null
-//     ? getSessionStorage("searchPageNumber")
-//     : 1;
+const initialState: InitialState = {
+  platform: null,
+  ordering: null,
+};
 
-// const initialState = {
-//   searchValue,
-//   currentPage,
-// };
+export const filterGamesReducer = createSlice({
+  name: "filter",
+  initialState,
+  reducers: {
+    setFilter: (state, action) => {
+      if (typeof action.payload == "string") {
+        state.ordering = action.payload;
+      } else {
+        state.platform = action.payload;
+      }
+    },
+  },
+});
 
-// export const filterGamesReducer = createSlice({
-//   name: "filterGames",
-//   initialState,
-//   reducers: {
-//     setFilter: (state, action) => {},
-//   },
-// });
+export const { setFilter } = filterGamesReducer.actions;
 
-// export const { setFilter } = filterGamesReducer.actions;
-
-// export default filterGamesReducer.reducer;
+export default filterGamesReducer.reducer;

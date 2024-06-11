@@ -1,5 +1,5 @@
 export interface TitleProps {
-  name: string;
+  name: string | undefined;
 }
 
 const SubTitle = ({ name }: TitleProps) => {

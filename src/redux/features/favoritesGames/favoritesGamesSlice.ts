@@ -1,6 +1,6 @@
-import { Game } from "@/types/Game";
-import { getLocalStorage } from "@/utils/getLocalStorage";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getLocalStorage } from "@/utils/getLocalStorage";
+import { Game } from "@/types/Game";
 
 const games =
   getLocalStorage("favoritesGames") !== null
